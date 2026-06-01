@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Quiz — LPIC-3 Security Companion</title>
+  <meta name="description" content="65-question practice exam for LPIC-3 Security 303-300 — multiple choice and fill-in-the-blank with instant feedback.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="../index.html" class="nav-brand"><span class="icon">🔐</span> LPIC-3 Security Companion</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../chapters/index.html">Chapters</a>
+      <a href="../reference/index.html">Reference</a>
+      <a href="../labs/index.html">Labs</a>
+      <a href="../glossary/index.html">Glossary</a>
+      <a href="../flashcards/index.html">Flashcards</a>
+      <a href="index.html" class="active">Quiz</a>
+      <a href="../errata/index.html">Errata</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 0 2rem">
+  <div class="container">
+    <h1>✅ Practice Exam</h1>
+    <p class="subtitle">65 exam-style questions — multiple choice and fill-in-the-blank — with instant feedback and explanations. Passing: 62% (~500/800).</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <span class="quiz-score" id="quiz-score">Score: 0/0</span>
+      <span style="font-size:0.85rem;color:var(--text-dim)">65 Questions · ~90 min</span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+    <div id="quiz-container">
+      <p style="color:var(--text-muted)">Loading quiz...</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <span class="footer-brand">ArcLight Press</span>
+    <p>© 2026 Eric Tomchik. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+const quizQuestions = [
+  {q:"Which command generates a Certificate Signing Request using an existing private key?",type:"mc",options:["A. openssl genrsa -out server.csr","B. openssl req -new -key server.key -out server.csr","C. openssl csr -new -key server.key","D. openssl x509 -req -new server.key"],correct:1,explanation:"<code>openssl req -new</code> creates a CSR from an existing key. <code>genrsa</code> generates keys, not CSRs."},
+  {q:"What is the default port for the RADIUS authentication protocol?",type:"mc",options:["A. 389","B. 636","C. 1812","D. 1645"],correct:2,explanation:"RADIUS authentication uses port 1812 (accounting on 1813). Port 1645 was the legacy port."},
+  {q:"Which DNSSEC record type contains the digital signature for a resource record set?",type:"mc",options:["A. DNSKEY","B. DS","C. RRSIG","D. NSEC"],correct:2,explanation:"RRSIG (Resource Record Signature) contains the cryptographic signature. DNSKEY holds the public key, DS links to the parent zone."},
+  {q:"The command to open a LUKS-encrypted volume at /dev/sdb1 as \"secure_vol\" is: <code>cryptsetup ________ /dev/sdb1 secure_vol</code>",type:"fill",answer:["luksOpen","luksopen","open"],explanation:"Both <code>luksOpen</code> and <code>open --type luks</code> are accepted."},
+  {q:"Which SELinux command changes the mode to permissive at runtime?",type:"mc",options:["A. setenforce permissive","B. setenforce 0","C. getenforce 0","D. sestatus --permissive"],correct:1,explanation:"<code>setenforce 0</code> sets permissive mode. <code>setenforce 1</code> sets enforcing. <code>getenforce</code> only reads."},
+  {q:"Which iptables target performs source NAT using the outgoing interface's IP address?",type:"mc",options:["A. SNAT","B. DNAT","C. MASQUERADE","D. REDIRECT"],correct:2,explanation:"MASQUERADE dynamically uses the outgoing interface's IP for SNAT. SNAT requires a fixed IP."},
+  {q:"What capability allows a process to bind to ports below 1024?",type:"mc",options:["A. CAP_SYS_ADMIN","B. CAP_NET_BIND_SERVICE","C. CAP_NET_RAW","D. CAP_NET_ADMIN"],correct:1,explanation:"CAP_NET_BIND_SERVICE allows binding to privileged ports (< 1024) without root."},
+  {q:"The command to view all SELinux booleans is: <code>________ -a</code>",type:"fill",answer:["getsebool"],explanation:"<code>getsebool -a</code> lists all SELinux booleans and their current values."},
+  {q:"Which nmap scan type performs a UDP port scan?",type:"mc",options:["A. -sT","B. -sS","C. -sU","D. -sA"],correct:2,explanation:"<code>-sU</code> is UDP scan. <code>-sS</code> is SYN scan, <code>-sT</code> is TCP connect, <code>-sA</code> is ACK scan."},
+  {q:"In AIDE configuration, which symbol prefix excludes a directory from monitoring?",type:"mc",options:["A. #","B. -","C. !","D. ~"],correct:2,explanation:"The <code>!</code> prefix excludes paths from AIDE monitoring. <code>#</code> is a comment."},
+  {q:"Which VPN protocol is built into the Linux kernel since version 5.6?",type:"mc",options:["A. OpenVPN","B. strongSwan","C. WireGuard","D. L2TP"],correct:2,explanation:"WireGuard was merged into the Linux kernel in version 5.6. OpenVPN and strongSwan run in user space."},
+  {q:"Which file stores persistent audit rules on RHEL systems?",type:"mc",options:["A. /etc/audit/auditd.conf","B. /etc/audit/rules.d/audit.rules","C. /etc/auditctl.conf","D. /var/log/audit/rules"],correct:1,explanation:"Persistent rules go in <code>/etc/audit/rules.d/audit.rules</code>. <code>auditd.conf</code> configures the daemon itself."},
+  {q:"What does the sticky bit do when set on a directory?",type:"mc",options:["A. Makes all files executable","B. Forces group inheritance","C. Only the file owner, directory owner, or root can delete files","D. Encrypts the directory contents"],correct:2,explanation:"The sticky bit (chmod +t) on directories restricts file deletion to the owner, directory owner, or root. Classic example: /tmp."},
+  {q:"The command to apply SELinux file contexts after a semanage rule change is: <code>________ -Rv /path</code>",type:"fill",answer:["restorecon"],explanation:"<code>restorecon -Rv /path</code> recursively restores SELinux contexts to match the policy."},
+  {q:"Which protocol does OCSP use to check certificate revocation status?",type:"mc",options:["A. LDAP","B. HTTP","C. DNS","D. SMTP"],correct:1,explanation:"OCSP uses HTTP to query the CA's OCSP responder for real-time certificate status."},
+  {q:"Which systemd directive limits the maximum number of processes a service can create?",type:"mc",options:["A. ProcessMax","B. TasksMax","C. PIDLimit","D. ForkMax"],correct:1,explanation:"<code>TasksMax=</code> limits the number of tasks (processes + threads) in a service's cgroup."},
+  {q:"In strongSwan, which file contains IPsec pre-shared keys?",type:"mc",options:["A. /etc/ipsec.conf","B. /etc/ipsec.secrets","C. /etc/strongswan/psk.conf","D. /etc/ipsec.d/secrets"],correct:1,explanation:"<code>/etc/ipsec.secrets</code> stores PSKs, private keys, and certificate references. <code>/etc/ipsec.conf</code> stores connection definitions."},
+  {q:"Which Snort rule option assigns a unique identifier to a rule?",type:"mc",options:["A. msg","B. rev","C. sid","D. id"],correct:2,explanation:"<code>sid</code> (Snort ID) uniquely identifies each rule. <code>rev</code> tracks the rule revision number."},
+  {q:"The command to create an AIDE baseline database is: <code>aide ________</code>",type:"fill",answer:["--init"],explanation:"<code>aide --init</code> creates the initial baseline database. Later use <code>aide --check</code> to detect changes."},
+  {q:"Which iptables chain processes packets being routed through the machine (not destined for it)?",type:"mc",options:["A. INPUT","B. OUTPUT","C. FORWARD","D. PREROUTING"],correct:2,explanation:"FORWARD handles packets passing through the machine. INPUT is for local-destined, OUTPUT for locally-generated."},
+  {q:"What does the RPM verification flag \"5\" indicate?",type:"mc",options:["A. File size changed","B. File permissions changed","C. MD5 digest differs","D. Ownership changed"],correct:2,explanation:"In <code>rpm -V</code> output, \"5\" means the MD5/SHA256 checksum has changed, indicating file content was modified."},
+  {q:"Which tool signs SSH host keys with a Certificate Authority?",type:"mc",options:["A. openssl","B. ssh-keygen","C. ssh-certgen","D. ssh-ca"],correct:1,explanation:"<code>ssh-keygen -s ca_key -I host_id -h host_key.pub</code> signs host keys. The <code>-s</code> flag specifies the CA key."},
+  {q:"What kernel parameter enables full Address Space Layout Randomization?",type:"mc",options:["A. kernel.aslr = 1","B. kernel.randomize_va_space = 1","C. kernel.randomize_va_space = 2","D. kernel.exec-shield = 2"],correct:2,explanation:"<code>kernel.randomize_va_space = 2</code> enables full ASLR (stack, VDSO, mmap, heap). Value 1 is partial."},
+  {q:"The command to save current iptables rules is: <code>________</code>",type:"fill",answer:["iptables-save"],explanation:"<code>iptables-save</code> outputs current rules to stdout. Typically redirected to a file."},
+  {q:"Which MAC system uses path-based profiles rather than security labels?",type:"mc",options:["A. SELinux","B. AppArmor","C. Smack","D. TOMOYO"],correct:1,explanation:"AppArmor uses path-based profiles stored in /etc/apparmor.d/. SELinux and Smack use label-based approaches."},
+  {q:"What is the purpose of the DANE/TLSA DNS record?",type:"mc",options:["A. Define mail exchange servers","B. Associate TLS certificates with DNS names","C. Specify authorized certificate authorities","D. Authenticate DNS zone transfers"],correct:1,explanation:"DANE uses TLSA records to bind TLS certificates to DNS names, enabling certificate verification without traditional CAs. Requires DNSSEC."},
+  {q:"Which connection tracking state represents a packet that is part of an already established connection?",type:"mc",options:["A. NEW","B. ESTABLISHED","C. RELATED","D. TRACKED"],correct:1,explanation:"ESTABLISHED means the packet belongs to a connection that has seen traffic in both directions."},
+  {q:"Which file contains per-user resource limits on Linux?",type:"mc",options:["A. /etc/security/access.conf","B. /etc/security/limits.conf","C. /etc/ulimit.conf","D. /etc/pam.d/limits"],correct:1,explanation:"<code>/etc/security/limits.conf</code> sets per-user/group limits enforced by <code>pam_limits.so</code>."},
+  {q:"The OpenVPN configuration directive that specifies the VPN subnet is: <code>________ 10.8.0.0 255.255.255.0</code>",type:"fill",answer:["server"],explanation:"The <code>server</code> directive configures the VPN subnet and push routes. It's a macro that sets up tun, ifconfig, and routes."},
+  {q:"Which command tests FreeRADIUS authentication from the command line?",type:"mc",options:["A. radcheck","B. radtest","C. radiustest","D. freeradius --test"],correct:1,explanation:"<code>radtest user pass localhost 0 secret</code> sends a test authentication request to the RADIUS server."},
+  {q:"What type of attack uses pre-computed hash-to-password lookup tables?",type:"mc",options:["A. Brute force","B. Dictionary attack","C. Rainbow table attack","D. Pass-the-hash"],correct:2,explanation:"Rainbow tables are pre-computed lookup tables mapping hashes to passwords. Salting passwords defeats this attack."},
+  {q:"Which SELinux policy type confines only specific daemons while leaving other processes unconfined?",type:"mc",options:["A. Strict","B. Targeted","C. MLS","D. Minimum"],correct:1,explanation:"Targeted policy (default on RHEL) confines key daemons (httpd, sshd, etc.) while unconfined_t covers everything else."},
+  {q:"The command to list capabilities of a file is: <code>________ /path/to/file</code>",type:"fill",answer:["getcap"],explanation:"<code>getcap</code> displays file capabilities. <code>setcap</code> sets them."},
+  {q:"Which iptables table is used to mark packets for Quality of Service or policy routing?",type:"mc",options:["A. filter","B. nat","C. mangle","D. raw"],correct:2,explanation:"The mangle table is used to alter packet headers, set marks, and change TTL/TOS values for QoS or routing decisions."},
+  {q:"What is the key purpose of Certificate Transparency (CT) logs?",type:"mc",options:["A. Encrypting certificate private keys","B. Storing revoked certificates","C. Publicly logging all issued certificates to detect mis-issuance","D. Distributing root CA certificates"],correct:2,explanation:"CT logs are public, append-only logs of all issued certificates, enabling domain owners and researchers to detect rogue or misissued certificates."},
+  {q:"Which tool automates downloading and updating Snort rules?",type:"mc",options:["A. snort-update","B. pulledpork.pl","C. oinkmaster","D. snortrules"],correct:1,explanation:"PulledPork is the standard tool for automating Snort rule downloads and updates from Snort.org."},
+  {q:"The command to bring up a WireGuard interface named wg0 is: <code>________ up wg0</code>",type:"fill",answer:["wg-quick"],explanation:"<code>wg-quick up wg0</code> reads /etc/wireguard/wg0.conf and brings up the WireGuard tunnel."},
+  {q:"What distinguishes a routed VPN (tun) from a bridged VPN (tap)?",type:"mc",options:["A. tun operates at Layer 2, tap at Layer 3","B. tun operates at Layer 3, tap at Layer 2","C. tun requires UDP, tap requires TCP","D. tun supports encryption, tap does not"],correct:1,explanation:"tun = Layer 3 (routes IP packets). tap = Layer 2 (bridges Ethernet frames). Both support encryption."},
+  {q:"Which command makes audit rules immutable (requiring a reboot to change)?",type:"mc",options:["A. auditctl -l","B. auditctl -e 2","C. auditctl --lock","D. auditctl -D"],correct:1,explanation:"<code>auditctl -e 2</code> locks the audit configuration. Rules cannot be changed until reboot. Use as the last rule."},
+  {q:"In TLS 1.3, which key exchange methods were removed?",type:"mc",options:["A. ECDHE","B. DHE","C. RSA key exchange and static DH","D. All key exchange (TLS 1.3 uses pre-shared keys only)"],correct:2,explanation:"TLS 1.3 removed RSA key exchange and static DH, requiring ephemeral key exchange (ECDHE/DHE) for Perfect Forward Secrecy."},
+  {q:"The command to search audit logs for events with key \"sshd_config\" is: <code>________ -k sshd_config</code>",type:"fill",answer:["ausearch"],explanation:"<code>ausearch -k keyname</code> searches the audit log for events tagged with the specified key."},
+  {q:"Which systemd directive makes /usr, /boot, and /etc read-only for a service?",type:"mc",options:["A. ReadOnlySystem=yes","B. ProtectSystem=strict","C. ReadOnlyPaths=/usr /boot /etc","D. SystemReadOnly=true"],correct:1,explanation:"<code>ProtectSystem=strict</code> makes the entire filesystem hierarchy read-only except /dev, /proc, /sys. Use <code>ReadWritePaths=</code> for exceptions."},
+  {q:"What is the purpose of ndpmon?",type:"mc",options:["A. Monitor NTP synchronization","B. Monitor IPv6 Neighbor Discovery Protocol for rogue routers","C. Monitor DHCP lease assignments","D. Monitor DNS query patterns"],correct:1,explanation:"ndpmon monitors NDP (Neighbor Discovery Protocol) traffic on IPv6 networks to detect rogue router advertisements and address spoofing."},
+  {q:"Which LUKS version supports the Argon2 key derivation function?",type:"mc",options:["A. LUKS1","B. LUKS2","C. Both LUKS1 and LUKS2","D. Neither (Argon2 is not used with LUKS)"],correct:1,explanation:"LUKS2 uses Argon2id by default, which is memory-hard and GPU-resistant. LUKS1 uses PBKDF2."},
+  {q:"The SELinux command to permanently add an allowed port for httpd is: <code>semanage ________ -a -t http_port_t -p tcp 8443</code>",type:"fill",answer:["port"],explanation:"<code>semanage port</code> manages SELinux port type definitions. The <code>-a</code> flag adds a new port label."},
+  {q:"Which Nmap flag skips host discovery and scans all targets?",type:"mc",options:["A. -sn","B. -Pn","C. -PS","D. -PA"],correct:1,explanation:"<code>-Pn</code> treats all hosts as online, skipping host discovery. Useful when ICMP is blocked. <code>-sn</code> does ping scan only."},
+  {q:"What is the purpose of the CAA DNS record type?",type:"mc",options:["A. Define canonical name aliases","B. Specify which CAs are authorized to issue certificates for a domain","C. Configure certificate authentication","D. Store certificate fingerprints"],correct:1,explanation:"CAA (Certification Authority Authorization) records specify which Certificate Authorities are permitted to issue certificates for the domain."},
+  {q:"Which Linux defense mechanism separates kernel and user-space page tables to mitigate Meltdown?",type:"mc",options:["A. ASLR","B. Retpoline","C. KPTI","D. seccomp"],correct:2,explanation:"KPTI (Kernel Page Table Isolation) separates kernel and user-space page tables. Retpoline mitigates Spectre v2."},
+  {q:"The file that controls persistent SELinux mode is: <code>/etc/selinux/________</code>",type:"fill",answer:["config"],explanation:"<code>/etc/selinux/config</code> sets SELINUX=enforcing|permissive|disabled and SELINUXTYPE=targeted|mls."},
+  {q:"Which Metasploit module type is delivered through an exploit to provide remote access?",type:"mc",options:["A. Auxiliary","B. Exploit","C. Payload","D. Encoder"],correct:2,explanation:"Payloads are code delivered by exploits to the target — e.g., Meterpreter, reverse shell. Encoders obfuscate payloads."},
+  {q:"What sysctl parameter enables SYN cookies to defend against SYN flood attacks?",type:"mc",options:["A. net.ipv4.tcp_max_syn_backlog","B. net.ipv4.tcp_syncookies = 1","C. net.ipv4.tcp_syn_flood = 0","D. net.ipv4.icmp_echo_ignore_all"],correct:1,explanation:"<code>net.ipv4.tcp_syncookies = 1</code> enables SYN cookies, allowing the server to handle SYN floods without exhausting the backlog."},
+  {q:"Which command sets an ACL giving user \"jane\" read-write access to a file?",type:"mc",options:["A. chmod u:jane:rw file","B. setfacl -m u:jane:rw file","C. chacl u:jane:rw file","D. setfacl -a u:jane:rw file"],correct:1,explanation:"<code>setfacl -m u:jane:rw file</code> modifies the ACL. <code>-m</code> modifies, <code>u:jane:rw</code> specifies user:name:permissions."},
+  {q:"The WireGuard command to check tunnel status is: <code>wg ________</code>",type:"fill",answer:["show"],explanation:"<code>wg show</code> displays WireGuard interface information including peers, endpoints, and transfer stats."},
+  {q:"Which IPsec mode encrypts only the payload, not the IP header?",type:"mc",options:["A. Tunnel mode","B. Transport mode","C. Aggressive mode","D. Quick mode"],correct:1,explanation:"Transport mode encrypts only the payload, preserving the original IP header. Tunnel mode encrypts the entire packet and adds a new header."},
+  {q:"What is the primary purpose of the <code>setfattr</code> command?",type:"mc",options:["A. Set file ACLs","B. Set extended file attributes","C. Set file capabilities","D. Set SELinux contexts"],correct:1,explanation:"<code>setfattr</code> sets extended file attributes (xattrs). ACLs use <code>setfacl</code>, capabilities use <code>setcap</code>."},
+  {q:"Which tool monitors real-time network traffic and provides a web-based dashboard?",type:"mc",options:["A. Snort","B. ntopng","C. tcpdump","D. arpwatch"],correct:1,explanation:"ntopng provides a web-based dashboard (default port 3000) for real-time network traffic monitoring and analysis."},
+  {q:"The iptables command to set the default policy for the INPUT chain to DROP is: <code>iptables -P INPUT ________</code>",type:"fill",answer:["DROP","drop"],explanation:"<code>iptables -P INPUT DROP</code> sets the default policy to drop all packets that don't match any rule."},
+  {q:"Which Metasploit tool generates standalone payloads?",type:"mc",options:["A. msfconsole","B. msfvenom","C. msfdb","D. msfpayload"],correct:1,explanation:"<code>msfvenom</code> combines the old msfpayload and msfencode tools to generate and encode standalone payloads."},
+  {q:"What does the <code>-P</code> flag do in <code>setsebool -P</code>?",type:"mc",options:["A. Sets the boolean for the current process only","B. Makes the boolean change persistent across reboots","C. Shows the current value of the boolean","D. Sets the boolean for the targeted policy only"],correct:1,explanation:"<code>-P</code> makes the boolean change persistent by writing it to the on-disk policy. Without <code>-P</code>, changes revert on reboot."},
+  {q:"The command to generate DNSSEC keys for a zone is: <code>________ -a ECDSAP256SHA256 -n ZONE example.com</code>",type:"fill",answer:["dnssec-keygen"],explanation:"<code>dnssec-keygen</code> generates DNSSEC key pairs. Add <code>-f KSK</code> for the Key Signing Key."},
+  {q:"The PAM module that enables keystroke logging for TTY sessions is: <code>session required ________.so enable=*</code>",type:"fill",answer:["pam_tty_audit"],explanation:"<code>pam_tty_audit</code> logs all keystrokes for specified users. View with <code>aureport --tty</code>."},
+  {q:"The configuration file for cryptmount encrypted volume definitions is: <code>/etc/cryptmount/________</code>",type:"fill",answer:["cmtab"],explanation:"<code>/etc/cryptmount/cmtab</code> defines encrypted volumes that cryptmount can manage."},
+  {q:"The default port for the Tang key escrow server (NBDE) is: <code>________</code>",type:"fill",answer:["7500"],explanation:"Tang listens on port 7500 by default. It provides key escrow for network-bound disk encryption with Clevis."},
+  {q:"The command to view TTY keystroke audit records is: <code>aureport ________</code>",type:"fill",answer:["--tty"],explanation:"<code>aureport --tty</code> displays a report of all TTY keystroke events from the audit log."},
+  {q:"To generate a 2048-bit DNSSEC Zone Signing Key, the key size flag is: <code>dnssec-keygen -a RSASHA256 ________ -n ZONE example.com</code>",type:"fill",answer:["-b 2048","-b2048"],explanation:"<code>-b 2048</code> specifies the key size in bits. For ECDSAP256SHA256 the size is implicit."},
+];
+
+document.addEventListener('DOMContentLoaded', () => initQuiz(quizQuestions));
+</script>
+</body>
+</html>

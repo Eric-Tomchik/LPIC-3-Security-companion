@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards — LPIC-3 Security Companion</title>
+  <meta name="description" content="Interactive flashcards for LPIC-3 Security 303-300 — flip, shuffle, filter by category, and drill with keyboard shortcuts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="../index.html" class="nav-brand"><span class="icon">🔐</span> LPIC-3 Security Companion</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../chapters/index.html">Chapters</a>
+      <a href="../reference/index.html">Reference</a>
+      <a href="../labs/index.html">Labs</a>
+      <a href="../glossary/index.html">Glossary</a>
+      <a href="index.html" class="active">Flashcards</a>
+      <a href="../quiz/index.html">Quiz</a>
+      <a href="../errata/index.html">Errata</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 0 2rem">
+  <div class="container">
+    <h1>🃏 Flashcards</h1>
+    <p class="subtitle">Click to flip, arrow keys to navigate, <kbd>S</kbd> to shuffle. Filter by category to focus your study.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="flashcard-container">
+
+    <div style="margin-bottom:1.5rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;align-items:center">
+      <select class="flashcard-category-select" id="flashcard-category">
+        <option value="all">All Categories</option>
+        <option value="crypto">Cryptography</option>
+        <option value="pki">PKI & Certificates</option>
+        <option value="fs">Encrypted File Systems</option>
+        <option value="dns">DNSSEC & DNS</option>
+        <option value="host">Host Security</option>
+        <option value="audit">Auditing & HIDS</option>
+        <option value="mac">SELinux & AppArmor</option>
+        <option value="firewall">Firewalls & Networking</option>
+        <option value="vpn">VPNs</option>
+        <option value="threats">Threats & Pen Testing</option>
+        <option value="commands">Command Drills</option>
+      </select>
+      <span class="flashcard-progress" id="flashcard-progress">1 / 100</span>
+    </div>
+
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <h3>Loading...</h3>
+          <div class="flashcard-hint">Click to flip</div>
+        </div>
+        <div class="flashcard-back">
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="btn btn-outline" onclick="prevCard()">← Prev</button>
+      <button class="btn btn-primary" onclick="flipCard()">Flip</button>
+      <button class="btn btn-outline" onclick="nextCard()">Next →</button>
+      <button class="btn btn-outline" onclick="shuffleDeck()">🔀 Shuffle</button>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <span class="footer-brand">ArcLight Press</span>
+    <p>© 2026 Eric Tomchik. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+const flashcardData = [
+  // Cryptography
+  {term:"Symmetric Encryption",def:"Uses a single shared key for both encryption and decryption. Examples: AES-256, ChaCha20. Fast but requires secure key exchange.",cat:"crypto"},
+  {term:"Asymmetric Encryption",def:"Uses a key pair (public + private). Public key encrypts, private key decrypts. Examples: RSA, Ed25519, ECDSA.",cat:"crypto"},
+  {term:"Hash Function",def:"One-way function producing a fixed-size digest. Used for integrity verification, password storage, and digital signatures. Examples: SHA-256, SHA-3.",cat:"crypto"},
+  {term:"HMAC",def:"Hash-based Message Authentication Code — keyed hash providing integrity and authentication. Used by TSIG for DNS zone transfer authentication.",cat:"crypto"},
+  {term:"Digital Signature",def:"Cryptographic proof of authenticity and integrity. The sender hashes the message, then encrypts the hash with their private key.",cat:"crypto"},
+  {term:"PFS (Perfect Forward Secrecy)",def:"Property ensuring compromise of long-term keys doesn't compromise past session keys. Requires ephemeral DH/ECDH key exchange.",cat:"crypto"},
+  {term:"AEAD",def:"Authenticated Encryption with Associated Data — cipher mode providing both confidentiality and integrity. Examples: AES-GCM, ChaCha20-Poly1305.",cat:"crypto"},
+  {term:"KDF",def:"Key Derivation Function — derives cryptographic keys from passwords. Examples: PBKDF2 (LUKS1), Argon2id (LUKS2).",cat:"crypto"},
+  // PKI
+  {term:"X.509 Certificate",def:"Standard format for public key certificates. Contains: subject, issuer, public key, serial number, validity dates, extensions, and signature.",cat:"pki"},
+  {term:"CSR",def:"Certificate Signing Request — contains the applicant's public key and subject info. Generated with: openssl req -new -key key.pem -out csr.pem",cat:"pki"},
+  {term:"Certificate Authority (CA)",def:"Trusted entity that issues, signs, and revokes digital certificates. Root CAs sign intermediate CAs to form a chain of trust.",cat:"pki"},
+  {term:"OCSP Stapling",def:"Server periodically fetches its own OCSP response and sends it during the TLS handshake, reducing latency and improving privacy.",cat:"pki"},
+  {term:"SAN Extension",def:"Subject Alternative Name — X.509v3 extension listing additional hostnames/IPs a certificate covers. Essential for multi-domain certs.",cat:"pki"},
+  {term:"Let's Encrypt / ACME",def:"Free CA using the ACME protocol for automated certificate issuance. Client: certbot. Certs valid 90 days, auto-renewed.",cat:"pki"},
+  {term:"Certificate Transparency",def:"Public, append-only logs of all issued certificates. Designed to detect mis-issuance and rogue CAs.",cat:"pki"},
+  // Encrypted File Systems
+  {term:"LUKS",def:"Linux Unified Key Setup — standard disk encryption format. Up to 32 key slots, header contains encrypted master key. Tool: cryptsetup.",cat:"fs"},
+  {term:"LUKS vs. eCryptfs",def:"LUKS encrypts full block devices (partitions). eCryptfs is a stacked filesystem encrypting individual files with per-file FEK/FEFEK keys.",cat:"fs"},
+  {term:"NBDE (Clevis + Tang)",def:"Network-Bound Disk Encryption — LUKS volumes auto-unlock when the Tang server (port 7500) is reachable. Clevis is the client.",cat:"fs"},
+  {term:"/etc/crypttab",def:"Configuration file that tells the system how to auto-unlock encrypted volumes at boot. Format: name device key options.",cat:"fs"},
+  {term:"Argon2 vs. PBKDF2",def:"Argon2id is memory-hard (GPU-resistant) and used by LUKS2. PBKDF2 is iteration-based and used by LUKS1/GRUB2.",cat:"fs"},
+  // DNSSEC
+  {term:"DNSSEC",def:"DNS Security Extensions — adds RRSIG (signatures), DNSKEY (public keys), DS (delegation), NSEC/NSEC3 (denial of existence) records.",cat:"dns"},
+  {term:"KSK vs. ZSK",def:"Key Signing Key signs the DNSKEY RRset and is referenced in the parent DS record. Zone Signing Key signs all other records. ZSK rolls more frequently.",cat:"dns"},
+  {term:"DS Record",def:"Delegation Signer — stored in parent zone. Contains hash of child zone's KSK. Establishes the DNSSEC chain of trust.",cat:"dns"},
+  {term:"TSIG",def:"Transaction Signature — shared HMAC key authenticating DNS zone transfers and dynamic updates. Generated with tsig-keygen.",cat:"dns"},
+  {term:"DANE / TLSA Record",def:"DNS-based Authentication of Named Entities — TLSA records associate TLS certificates with domains, bypassing the CA system. Requires DNSSEC.",cat:"dns"},
+  {term:"DoT vs. DoH",def:"DNS over TLS (port 853) vs. DNS over HTTPS (port 443). Both encrypt DNS queries. DoT is easier to filter; DoH blends with web traffic.",cat:"dns"},
+  // Host Security
+  {term:"Linux Capabilities",def:"Fine-grained privileges replacing all-or-nothing root. Example: CAP_NET_BIND_SERVICE lets a process bind to ports < 1024 without root.",cat:"host"},
+  {term:"ASLR",def:"Address Space Layout Randomization — randomizes memory layout. Controlled by kernel.randomize_va_space (0=off, 1=partial, 2=full).",cat:"host"},
+  {term:"systemd Sandboxing",def:"Unit-level security: ProtectSystem=strict, PrivateDevices=yes, NoNewPrivileges=yes. Analyze with: systemd-analyze security unit.service.",cat:"host"},
+  {term:"USBGuard",def:"Framework for authorizing/blocking USB devices based on policy rules. Prevents rogue USB attacks (rubber ducky, BadUSB).",cat:"host"},
+  {term:"SSH Certificate Authority",def:"SSH CA signs host/user keys. Users trust the CA rather than individual keys. Signed with: ssh-keygen -s ca_key -I id -h host_key.pub.",cat:"host"},
+  {term:"chroot",def:"Changes the apparent root directory for a process. Basic isolation — not a security boundary alone (needs additional restrictions).",cat:"host"},
+  // Auditing
+  {term:"Linux Audit (auditd)",def:"Kernel-level event logging. auditctl adds rules, ausearch queries logs, aureport generates reports. Rules persist in /etc/audit/rules.d/.",cat:"audit"},
+  {term:"AIDE",def:"Advanced Intrusion Detection Environment — file integrity checker. aide --init creates baseline, aide --check detects changes.",cat:"audit"},
+  {term:"rkhunter",def:"Rootkit Hunter — scans for rootkits, backdoors, and local exploits. rkhunter --check scans, --propupd updates baseline.",cat:"audit"},
+  {term:"pam_tty_audit",def:"PAM module enabling TTY keystroke logging. All keystrokes recorded to audit log. Viewed with aureport --tty.",cat:"audit"},
+  {term:"OpenSCAP",def:"Open-source SCAP scanner for security compliance. Evaluates systems against CIS benchmarks and DISA STIGs.",cat:"audit"},
+  // SELinux & AppArmor
+  {term:"SELinux Modes",def:"Enforcing (blocks + logs), Permissive (logs only), Disabled. Runtime: setenforce. Persistent: /etc/selinux/config.",cat:"mac"},
+  {term:"SELinux Context",def:"Label format: user:role:type:level. Type enforcement is the primary mechanism. View with ls -Z, ps -eZ.",cat:"mac"},
+  {term:"restorecon",def:"Restores SELinux file contexts to the policy defaults. Usage: restorecon -Rv /path. Use after moving files or changing fcontext.",cat:"mac"},
+  {term:"audit2allow",def:"Generates SELinux allow rules from AVC denial messages. Usage: audit2allow -a -M modname, then semodule -i modname.pp.",cat:"mac"},
+  {term:"AppArmor vs. SELinux",def:"AppArmor is path-based (simpler). SELinux is label-based (more granular). AppArmor uses profiles in /etc/apparmor.d/.",cat:"mac"},
+  {term:"Smack",def:"Simplified Mandatory Access Control Kernel — lightweight label-based LSM. Simple rules format: subject object access. Used in IoT.",cat:"mac"},
+  // Firewalls
+  {term:"Netfilter Tables",def:"filter (INPUT/FORWARD/OUTPUT), nat (PREROUTING/POSTROUTING), mangle (modify packets), raw (bypass conntrack).",cat:"firewall"},
+  {term:"conntrack",def:"Connection tracking — netfilter subsystem tracking states: NEW, ESTABLISHED, RELATED, INVALID. Key for stateful firewalls.",cat:"firewall"},
+  {term:"nftables vs. iptables",def:"nftables replaces iptables with unified syntax, atomic rule replacement, and sets. Command: nft. Config: /etc/nftables.conf.",cat:"firewall"},
+  {term:"IP Sets",def:"Kernel data structures for efficient matching of IP addresses, networks, or ports. Created with ipset, referenced in iptables with -m set.",cat:"firewall"},
+  {term:"DNAT / SNAT",def:"DNAT rewrites destination (port forwarding, PREROUTING chain). SNAT rewrites source (POSTROUTING chain). MASQUERADE = dynamic SNAT.",cat:"firewall"},
+  // VPNs
+  {term:"OpenVPN",def:"SSL/TLS-based VPN using tun (routed, Layer 3) or tap (bridged, Layer 2) interfaces. Default port: 1194/UDP.",cat:"vpn"},
+  {term:"IPsec / strongSwan",def:"Kernel-level VPN using IKEv2 for key exchange and ESP for encryption. Config: /etc/ipsec.conf + /etc/ipsec.secrets. Ports: 500, 4500.",cat:"vpn"},
+  {term:"WireGuard",def:"Modern, lightweight VPN in the Linux kernel. Uses Curve25519 (DH), ChaCha20 (encrypt), Poly1305 (auth). Default port: 51820/UDP.",cat:"vpn"},
+  {term:"tun vs. tap Interface",def:"tun = Layer 3 (IP packets, routed VPN). tap = Layer 2 (Ethernet frames, bridged VPN). VPN type determines which to use.",cat:"vpn"},
+  // Threats
+  {term:"Buffer Overflow",def:"Writing data beyond a buffer's boundary to overwrite adjacent memory. Mitigations: ASLR, DEP/NX bit, stack canaries.",cat:"threats"},
+  {term:"XSS",def:"Cross-Site Scripting — injection of malicious scripts into web pages. Types: Stored, Reflected, DOM-based.",cat:"threats"},
+  {term:"DDoS",def:"Distributed Denial of Service — many sources overwhelm a target. Types: volumetric (UDP flood), protocol (SYN flood), application layer.",cat:"threats"},
+  {term:"Nmap Scan Types",def:"-sS SYN scan, -sT connect scan, -sU UDP scan, -sV version detect, -O OS detect, -sC default scripts, -A aggressive.",cat:"threats"},
+  {term:"Metasploit",def:"Penetration testing framework. Modules: exploits, payloads, auxiliary, post-exploitation. Console: msfconsole.",cat:"threats"},
+  // Command Drills (Appendix H)
+  {term:"openssl _____ -aes256 -out key.pem 4096",def:"genrsa — Generate a 4096-bit RSA key with AES-256 encryption",cat:"commands"},
+  {term:"openssl _____ -new -key key.pem -out csr.pem",def:"req — Create a Certificate Signing Request",cat:"commands"},
+  {term:"openssl x509 -in cert.pem _____ -noout",def:"-text — View certificate details in human-readable form",cat:"commands"},
+  {term:"openssl _____ -connect host:443",def:"s_client — Test a TLS connection to a remote server",cat:"commands"},
+  {term:"_____ certonly --standalone -d example.com",def:"certbot — Obtain a Let's Encrypt certificate",cat:"commands"},
+  {term:"ssh-keygen -t _____",def:"ed25519 — Generate an Ed25519 SSH key pair",cat:"commands"},
+  {term:"cryptsetup _____ /dev/sdb1",def:"luksFormat — Initialize LUKS encryption on a device",cat:"commands"},
+  {term:"cryptsetup _____ /dev/sdb1 secure_vol",def:"luksOpen — Open a LUKS volume",cat:"commands"},
+  {term:"cryptsetup _____ /dev/sdb1 --header-backup-file hdr.img",def:"luksHeaderBackup — Back up a LUKS header",cat:"commands"},
+  {term:"/etc/_____",def:"crypttab — File controlling auto-unlock of encrypted volumes at boot",cat:"commands"},
+  {term:"_____ -a ECDSAP256SHA256 -n ZONE example.com",def:"dnssec-keygen — Generate DNSSEC keys for a zone",cat:"commands"},
+  {term:"_____ -o example.com zone.file",def:"dnssec-signzone — Sign a DNS zone",cat:"commands"},
+  {term:"_____ -a hmac-sha256 xfer-key",def:"tsig-keygen — Generate a TSIG key for zone transfers",cat:"commands"},
+  {term:"auditctl _____ /etc/shadow -p wa -k shadow",def:"-w — Add an audit watch on /etc/shadow",cat:"commands"},
+  {term:"_____ -k shadow",def:"ausearch — Search audit log by key name",cat:"commands"},
+  {term:"aureport _____",def:"--tty — View TTY keystroke audit records",cat:"commands"},
+  {term:"aide _____",def:"--init — Create an AIDE baseline database",cat:"commands"},
+  {term:"_____ --check",def:"rkhunter — Scan for rootkits",cat:"commands"},
+  {term:"_____ 0",def:"setenforce — Set SELinux to permissive mode at runtime",cat:"commands"},
+  {term:"_____ fcontext -a -t httpd_sys_content_t \"/srv(/.*)?\"",def:"semanage — Permanently set a file's SELinux context",cat:"commands"},
+  {term:"_____ -Rv /srv",def:"restorecon — Apply SELinux contexts to a directory tree",cat:"commands"},
+  {term:"setsebool _____ httpd_can_network_connect on",def:"-P — Make an SELinux boolean persistent",cat:"commands"},
+  {term:"_____ -a -M mypolicy",def:"audit2allow — Generate a policy module from AVC denials",cat:"commands"},
+  {term:"_____",def:"aa-status — Check AppArmor profile status",cat:"commands"},
+  {term:"_____",def:"iptables-save — Save current iptables rules",cat:"commands"},
+  {term:"-m conntrack _____  ESTABLISHED,RELATED",def:"--ctstate — Match established connections in iptables",cat:"commands"},
+  {term:"nft _____ ruleset",def:"list — List the full nftables ruleset",cat:"commands"},
+  {term:"_____ up wg0",def:"wg-quick — Bring up a WireGuard tunnel",cat:"commands"},
+  {term:"wg _____",def:"show — Check WireGuard tunnel status",cat:"commands"},
+];
+
+document.addEventListener('DOMContentLoaded', () => initFlashcards(flashcardData));
+</script>
+</body>
+</html>

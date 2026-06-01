@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Reference — LPIC-3 Security Companion</title>
+  <meta name="description" content="Quick reference cards for every critical LPIC-3 Security command — OpenSSL, DNSSEC, SELinux, iptables, nftables, WireGuard, Nmap, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="../index.html" class="nav-brand"><span class="icon">🔐</span> LPIC-3 Security Companion</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../chapters/index.html">Chapters</a>
+      <a href="index.html" class="active">Reference</a>
+      <a href="../labs/index.html">Labs</a>
+      <a href="../glossary/index.html">Glossary</a>
+      <a href="../flashcards/index.html">Flashcards</a>
+      <a href="../quiz/index.html">Quiz</a>
+      <a href="../errata/index.html">Errata</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 0 2rem">
+  <div class="container">
+    <h1>📋 Command Quick Reference</h1>
+    <p class="subtitle">Every critical command from the study guide — organized by domain. Bookmark this page for exam day prep.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Cryptography -->
+    <div class="ref-card">
+      <h3>🔑 Cryptography &amp; Certificates</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Generate RSA key</td><td><code>openssl genrsa -aes256 -out key.pem 4096</code></td></tr>
+        <tr><td>Generate key (modern)</td><td><code>openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out key.pem</code></td></tr>
+        <tr><td>Generate Ed25519 SSH key</td><td><code>ssh-keygen -t ed25519</code></td></tr>
+        <tr><td>Create CSR</td><td><code>openssl req -new -key key.pem -out csr.pem</code></td></tr>
+        <tr><td>Sign certificate</td><td><code>openssl x509 -req -in csr.pem -CA ca.crt -CAkey ca.key -out cert.pem</code></td></tr>
+        <tr><td>Inspect certificate</td><td><code>openssl x509 -in cert.pem -text -noout</code></td></tr>
+        <tr><td>Test TLS connection</td><td><code>openssl s_client -connect host:443</code></td></tr>
+        <tr><td>Show full cert chain</td><td><code>openssl s_client -connect host:443 -showcerts</code></td></tr>
+        <tr><td>Get Let's Encrypt cert</td><td><code>certbot certonly --standalone -d example.com</code></td></tr>
+        <tr><td>Renew all certs</td><td><code>certbot renew</code></td></tr>
+        <tr><td>PEM → DER</td><td><code>openssl x509 -in cert.pem -outform DER -out cert.der</code></td></tr>
+        <tr><td>Create PKCS#12 bundle</td><td><code>openssl pkcs12 -export -in cert.pem -inkey key.pem -out bundle.p12</code></td></tr>
+        <tr><td>Verify cert matches key</td><td><code>openssl x509 -noout -modulus -in cert.pem | md5sum</code></td></tr>
+      </table>
+    </div>
+
+    <!-- LUKS -->
+    <div class="ref-card">
+      <h3>💽 Encrypted File Systems (LUKS)</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>LUKS format</td><td><code>cryptsetup luksFormat /dev/sdX</code></td></tr>
+        <tr><td>LUKS open</td><td><code>cryptsetup luksOpen /dev/sdX name</code></td></tr>
+        <tr><td>LUKS close</td><td><code>cryptsetup luksClose name</code></td></tr>
+        <tr><td>LUKS header backup</td><td><code>cryptsetup luksHeaderBackup /dev/sdX --header-backup-file backup.img</code></td></tr>
+        <tr><td>Add key slot</td><td><code>cryptsetup luksAddKey /dev/sdX</code></td></tr>
+        <tr><td>Remove key slot</td><td><code>cryptsetup luksRemoveKey /dev/sdX</code></td></tr>
+        <tr><td>Dump header info</td><td><code>cryptsetup luksDump /dev/sdX</code></td></tr>
+      </table>
+    </div>
+
+    <!-- DNSSEC -->
+    <div class="ref-card">
+      <h3>🛡️ DNSSEC &amp; DNS Security</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Generate KSK</td><td><code>dnssec-keygen -a ECDSAP256SHA256 -f KSK -n ZONE example.com</code></td></tr>
+        <tr><td>Generate ZSK</td><td><code>dnssec-keygen -a ECDSAP256SHA256 -n ZONE example.com</code></td></tr>
+        <tr><td>Sign zone</td><td><code>dnssec-signzone -o example.com zone.file</code></td></tr>
+        <tr><td>Verify DNSSEC</td><td><code>dig +dnssec example.com</code></td></tr>
+        <tr><td>Check DS record</td><td><code>dig DS example.com</code></td></tr>
+        <tr><td>Check RRSIG</td><td><code>dig RRSIG example.com</code></td></tr>
+        <tr><td>Generate TSIG key</td><td><code>tsig-keygen -a hmac-sha256 xfer-key</code></td></tr>
+        <tr><td>Dynamic DNS update</td><td><code>nsupdate -k /etc/named/key.conf</code></td></tr>
+        <tr><td>Query TLSA record</td><td><code>dig TLSA _443._tcp.example.com</code></td></tr>
+      </table>
+    </div>
+
+    <!-- Host Security -->
+    <div class="ref-card">
+      <h3>🏰 Host Security &amp; Auditing</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Get file capabilities</td><td><code>getcap /path/to/file</code></td></tr>
+        <tr><td>Set file capabilities</td><td><code>setcap cap_net_bind_service=+ep /path/to/file</code></td></tr>
+        <tr><td>Add audit watch rule</td><td><code>auditctl -w /etc/passwd -p wa -k passwd</code></td></tr>
+        <tr><td>Add syscall audit rule</td><td><code>auditctl -a always,exit -F arch=b64 -S execve -k cmds</code></td></tr>
+        <tr><td>Search audit logs</td><td><code>ausearch -k keyname</code></td></tr>
+        <tr><td>Generate audit report</td><td><code>aureport --summary</code></td></tr>
+        <tr><td>View TTY audit logs</td><td><code>aureport --tty</code></td></tr>
+        <tr><td>Make rules immutable</td><td><code>auditctl -e 2</code></td></tr>
+        <tr><td>AIDE init baseline</td><td><code>aide --init</code></td></tr>
+        <tr><td>AIDE check</td><td><code>aide --check</code></td></tr>
+        <tr><td>AIDE update baseline</td><td><code>aide --update</code></td></tr>
+        <tr><td>Rootkit scan</td><td><code>rkhunter --check</code></td></tr>
+        <tr><td>Update rkhunter baseline</td><td><code>rkhunter --propupd</code></td></tr>
+        <tr><td>RPM verify all packages</td><td><code>rpm -Va</code></td></tr>
+        <tr><td>View cgroup tree</td><td><code>systemd-cgls</code></td></tr>
+        <tr><td>Monitor resource usage</td><td><code>systemd-cgtop</code></td></tr>
+        <tr><td>Analyze sandboxing</td><td><code>systemd-analyze security servicename</code></td></tr>
+      </table>
+    </div>
+
+    <!-- SELinux -->
+    <div class="ref-card">
+      <h3>🔒 SELinux &amp; AppArmor</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Check SELinux mode</td><td><code>getenforce</code></td></tr>
+        <tr><td>Set mode (temporary)</td><td><code>setenforce 1</code> or <code>setenforce 0</code></td></tr>
+        <tr><td>Full SELinux status</td><td><code>sestatus</code></td></tr>
+        <tr><td>Set file context (perm)</td><td><code>semanage fcontext -a -t TYPE "/path(/.*)?"</code></td></tr>
+        <tr><td>Apply contexts</td><td><code>restorecon -Rv /path</code></td></tr>
+        <tr><td>Set boolean (perm)</td><td><code>setsebool -P boolean_name on</code></td></tr>
+        <tr><td>List all booleans</td><td><code>getsebool -a</code></td></tr>
+        <tr><td>Add port label</td><td><code>semanage port -a -t TYPE -p tcp PORT</code></td></tr>
+        <tr><td>Search AVC denials</td><td><code>ausearch -m AVC -ts today</code></td></tr>
+        <tr><td>Generate allow module</td><td><code>audit2allow -a -M modname</code></td></tr>
+        <tr><td>Install module</td><td><code>semodule -i modname.pp</code></td></tr>
+        <tr><td>AppArmor status</td><td><code>aa-status</code></td></tr>
+        <tr><td>Set profile to enforce</td><td><code>aa-enforce /etc/apparmor.d/profile</code></td></tr>
+        <tr><td>Set profile to complain</td><td><code>aa-complain /etc/apparmor.d/profile</code></td></tr>
+      </table>
+    </div>
+
+    <!-- Firewall -->
+    <div class="ref-card">
+      <h3>🔥 Firewall &amp; Networking</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>List iptables rules</td><td><code>iptables -L -v -n --line-numbers</code></td></tr>
+        <tr><td>Add allow rule</td><td><code>iptables -A INPUT -p tcp --dport 22 -j ACCEPT</code></td></tr>
+        <tr><td>Set default policy</td><td><code>iptables -P INPUT DROP</code></td></tr>
+        <tr><td>Save rules</td><td><code>iptables-save > /etc/iptables/rules.v4</code></td></tr>
+        <tr><td>Restore rules</td><td><code>iptables-restore < /etc/iptables/rules.v4</code></td></tr>
+        <tr><td>Masquerade (NAT)</td><td><code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code></td></tr>
+        <tr><td>Port forward (DNAT)</td><td><code>iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 10.0.0.5:8080</code></td></tr>
+        <tr><td>Conntrack state match</td><td><code>iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</code></td></tr>
+        <tr><td>Create IP set</td><td><code>ipset create setname hash:ip</code></td></tr>
+        <tr><td>Match IP set</td><td><code>iptables -A INPUT -m set --match-set setname src -j DROP</code></td></tr>
+        <tr><td>List conntrack table</td><td><code>conntrack -L</code></td></tr>
+        <tr><td>List nftables rules</td><td><code>nft list ruleset</code></td></tr>
+        <tr><td>WireGuard up</td><td><code>wg-quick up wg0</code></td></tr>
+        <tr><td>WireGuard status</td><td><code>wg show</code></td></tr>
+        <tr><td>IPsec status</td><td><code>ipsec statusall</code></td></tr>
+        <tr><td>RADIUS test</td><td><code>radtest user pass localhost 0 secret</code></td></tr>
+      </table>
+    </div>
+
+    <!-- Scanning -->
+    <div class="ref-card">
+      <h3>🔍 Scanning &amp; Detection</h3>
+      <table class="ref-table">
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Nmap SYN scan</td><td><code>nmap -sS target</code></td></tr>
+        <tr><td>Nmap version detect</td><td><code>nmap -sV target</code></td></tr>
+        <tr><td>Nmap OS detect</td><td><code>nmap -O target</code></td></tr>
+        <tr><td>Nmap aggressive</td><td><code>nmap -A target</code></td></tr>
+        <tr><td>Nmap default scripts</td><td><code>nmap -sC target</code></td></tr>
+        <tr><td>Nmap UDP scan</td><td><code>nmap -sU target</code></td></tr>
+        <tr><td>Skip host discovery</td><td><code>nmap -Pn target</code></td></tr>
+        <tr><td>tcpdump capture</td><td><code>tcpdump -i eth0 -w capture.pcap</code></td></tr>
+        <tr><td>Snort NIDS mode</td><td><code>snort -A console -c /etc/snort/snort.conf -i eth0</code></td></tr>
+        <tr><td>Update Snort rules</td><td><code>pulledpork.pl -c /etc/snort/pulledpork.conf</code></td></tr>
+      </table>
+    </div>
+
+    <!-- Key Ports -->
+    <div class="ref-card">
+      <h3>🌐 Key Ports &amp; Protocols</h3>
+      <table class="ref-table">
+        <tr><th>Port</th><th>Protocol/Service</th></tr>
+        <tr><td>22</td><td>SSH</td></tr>
+        <tr><td>53</td><td>DNS</td></tr>
+        <tr><td>80 / 443</td><td>HTTP / HTTPS</td></tr>
+        <tr><td>389 / 636</td><td>LDAP / LDAPS</td></tr>
+        <tr><td>500 / 4500</td><td>IKE / IKE NAT-T (IPsec)</td></tr>
+        <tr><td>853</td><td>DNS over TLS (DoT)</td></tr>
+        <tr><td>1194</td><td>OpenVPN</td></tr>
+        <tr><td>1812 / 1813</td><td>RADIUS auth / accounting</td></tr>
+        <tr><td>3000</td><td>ntopng web interface</td></tr>
+        <tr><td>7500</td><td>Tang (NBDE) key server</td></tr>
+        <tr><td>51820</td><td>WireGuard (default)</td></tr>
+      </table>
+    </div>
+
+    <!-- Key Files -->
+    <div class="ref-card">
+      <h3>📁 Key Configuration Files</h3>
+      <table class="ref-table">
+        <tr><th>File</th><th>Purpose</th></tr>
+        <tr><td><code>/etc/selinux/config</code></td><td>SELinux persistent mode (enforcing/permissive/disabled)</td></tr>
+        <tr><td><code>/etc/security/limits.conf</code></td><td>Per-user resource limits (ulimit)</td></tr>
+        <tr><td><code>/etc/crypttab</code></td><td>Auto-unlock encrypted volumes at boot</td></tr>
+        <tr><td><code>/etc/cryptmount/cmtab</code></td><td>cryptmount volume definitions</td></tr>
+        <tr><td><code>/etc/ipsec.conf</code></td><td>strongSwan IPsec configuration</td></tr>
+        <tr><td><code>/etc/ipsec.secrets</code></td><td>strongSwan pre-shared keys &amp; certificates</td></tr>
+        <tr><td><code>/etc/wireguard/wg0.conf</code></td><td>WireGuard interface configuration</td></tr>
+        <tr><td><code>/etc/audit/rules.d/audit.rules</code></td><td>Persistent audit rules (RHEL)</td></tr>
+        <tr><td><code>/etc/snort/snort.conf</code></td><td>Snort IDS configuration</td></tr>
+        <tr><td><code>/etc/aide.conf</code></td><td>AIDE integrity monitoring configuration</td></tr>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <span class="footer-brand">ArcLight Press</span>
+    <p>© 2026 Eric Tomchik. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

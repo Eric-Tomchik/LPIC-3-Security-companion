@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Labs — LPIC-3 Security Companion</title>
+  <meta name="description" content="20+ hands-on labs with interactive terminal simulators for the LPIC-3 Security 303-300 Study Guide.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="../index.html" class="nav-brand"><span class="icon">🔐</span> LPIC-3 Security Companion</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../chapters/index.html">Chapters</a>
+      <a href="../reference/index.html">Reference</a>
+      <a href="index.html" class="active">Labs</a>
+      <a href="../glossary/index.html">Glossary</a>
+      <a href="../flashcards/index.html">Flashcards</a>
+      <a href="../quiz/index.html">Quiz</a>
+      <a href="../errata/index.html">Errata</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 0 2rem">
+  <div class="container">
+    <h1>🔬 Interactive Labs</h1>
+    <p class="subtitle">20+ hands-on labs with interactive terminal simulators. Type commands, get feedback, and learn by doing — zero setup required.</p>
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.75rem">💡 Type <code>hint</code> in any terminal for the expected command</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- ═══ PART I: Cryptography ═══ -->
+    <div class="part-header">
+      <div class="part-label">Part I — Cryptography</div>
+      <div class="part-title">Topics 331.1–331.4</div>
+    </div>
+
+    <!-- Lab 1.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 1.1 — Symmetric &amp; Asymmetric Encryption in Practice</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 1</span>
+        <span class="tag tag-purple">Obj 331.1</span>
+        <span class="tag tag-green">5 Parts</span>
+      </div>
+      <div class="lab-objective">Perform symmetric encryption (AES-256-CBC, ChaCha20), RSA key generation, public-key encryption, digital signatures, hash functions, and Ed25519 SSH key generation using OpenSSL and ssh-keygen.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-1-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-1-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 1.1 — Cryptographic Operations</span>
+          </div>
+          <div class="terminal-body" id="term-1-1"></div>
+        </div>
+        <script>
+        document.querySelector('#lab-1-1 .lab-toggle, [onclick="toggleLab(\'lab-1-1\')"]')
+        </script>
+      </div>
+    </div>
+
+    <!-- Lab 2.1a -->
+    <div class="lab-card">
+      <h3>⚡ Lab 2.1a — Inspecting X.509 Certificates</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 2</span>
+        <span class="tag tag-purple">Obj 331.1</span>
+      </div>
+      <div class="lab-objective">Download and inspect real-world X.509 certificates: view subject, issuer, validity, SAN, and certificate chain using OpenSSL s_client and x509 commands.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-2-1a')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-2-1a">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 2.1a — X.509 Certificate Inspection</span>
+          </div>
+          <div class="terminal-body" id="term-2-1a"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 2.1b -->
+    <div class="lab-card">
+      <h3>⚡ Lab 2.1b — Building a Two-Tier PKI</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 2</span>
+        <span class="tag tag-purple">Obj 331.1</span>
+        <span class="tag tag-green">Multi-Step</span>
+      </div>
+      <div class="lab-objective">Build a complete two-tier PKI from scratch: generate a Root CA, create an Intermediate CA signed by the Root, then issue and verify an end-entity server certificate.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-2-1b')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-2-1b">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 2.1b — Two-Tier PKI</span>
+          </div>
+          <div class="terminal-body" id="term-2-1b"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 3.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 3.1 — End-to-End HTTPS Deployment</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 3</span>
+        <span class="tag tag-purple">Obj 331.2</span>
+      </div>
+      <div class="lab-objective">Deploy HTTPS on Apache with mod_ssl: generate a key and self-signed certificate, configure the VirtualHost, enforce TLS 1.2+, enable HSTS, and test with OpenSSL s_client.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-3-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-3-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 3.1 — HTTPS Deployment</span>
+          </div>
+          <div class="terminal-body" id="term-3-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 4.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 4.1 — LUKS Multi-Slot Key Management</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 4</span>
+        <span class="tag tag-purple">Obj 331.3</span>
+      </div>
+      <div class="lab-objective">Initialize LUKS encryption, manage multiple key slots (add, remove), back up and restore LUKS headers, and verify slot status using cryptsetup.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-4-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-4-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 4.1 — LUKS Key Management</span>
+          </div>
+          <div class="terminal-body" id="term-4-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 5.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 5.1 — Generating and Verifying DANE TLSA Records</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 5</span>
+        <span class="tag tag-purple">Obj 331.4</span>
+      </div>
+      <div class="lab-objective">Generate a DANE TLSA record from a certificate, add it to a DNS zone, and verify with dig. Learn TLSA usage types, selectors, and matching types.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-5-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-5-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 5.1 — DANE TLSA Records</span>
+          </div>
+          <div class="terminal-body" id="term-5-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 5.2 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 5.2 — TSIG-Authenticated Zone Transfer</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 5</span>
+        <span class="tag tag-purple">Obj 331.4</span>
+      </div>
+      <div class="lab-objective">Generate a TSIG key, configure BIND primary and secondary servers for authenticated zone transfers, and verify the AXFR with dig.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-5-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-5-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 5.2 — TSIG Zone Transfer</span>
+          </div>
+          <div class="terminal-body" id="term-5-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 5.3 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 5.3 — Complete DNSSEC Zone Signing Walkthrough</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 5</span>
+        <span class="tag tag-purple">Obj 331.4</span>
+        <span class="tag tag-orange">Exam Critical</span>
+      </div>
+      <div class="lab-objective">Generate KSK and ZSK, sign a zone, verify RRSIG records, and test DNSSEC validation with dig +dnssec. This is the most exam-relevant DNS lab.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-5-3')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-5-3">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 5.3 — DNSSEC Zone Signing</span>
+          </div>
+          <div class="terminal-body" id="term-5-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PART II: Host Security ═══ -->
+    <div class="part-header">
+      <div class="part-label">Part II — Host Security</div>
+      <div class="part-title">Topics 332.1–332.3</div>
+    </div>
+
+    <!-- Lab 6.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 6.1 — Hardening a Service with systemd-analyze</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 6</span>
+        <span class="tag tag-purple">Obj 332.1</span>
+      </div>
+      <div class="lab-objective">Audit a service's security exposure with systemd-analyze security, then harden it by adding ProtectSystem, PrivateDevices, NoNewPrivileges, and other sandboxing directives.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-6-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-6-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 6.1 — systemd Hardening</span>
+          </div>
+          <div class="terminal-body" id="term-6-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 6.2 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 6.2 — SSH Certificate Authority Setup</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 6</span>
+        <span class="tag tag-purple">Obj 332.1</span>
+      </div>
+      <div class="lab-objective">Create an SSH CA, sign host and user keys, configure clients to trust the CA, and verify certificate-based SSH authentication.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-6-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-6-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 6.2 — SSH CA</span>
+          </div>
+          <div class="terminal-body" id="term-6-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 7.0 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 7.0 — Building a Production Audit Ruleset</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 7</span>
+        <span class="tag tag-purple">Obj 332.2</span>
+      </div>
+      <div class="lab-objective">Create audit rules for sensitive files, system call monitoring, and executable tracking. Search and report on audit events using ausearch and aureport.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-7-0')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-7-0">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 7.0 — Audit Ruleset</span>
+          </div>
+          <div class="terminal-body" id="term-7-0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 7.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 7.1 — AIDE Integrity Monitoring</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 7</span>
+        <span class="tag tag-purple">Obj 332.2</span>
+      </div>
+      <div class="lab-objective">Initialize AIDE, create a baseline, simulate file changes, and run an integrity check to detect modifications.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-7-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-7-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 7.1 — AIDE</span>
+          </div>
+          <div class="terminal-body" id="term-7-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 8.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 8.1 — Fork Bomb Protection</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 8</span>
+        <span class="tag tag-purple">Obj 332.3</span>
+      </div>
+      <div class="lab-objective">Configure per-user process limits using ulimit and /etc/security/limits.conf to defend against fork bomb attacks.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-8-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-8-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 8.1 — Fork Bomb Defense</span>
+          </div>
+          <div class="terminal-body" id="term-8-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 8.2 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 8.2 — Controlling Service Resources with systemd</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 8</span>
+        <span class="tag tag-purple">Obj 332.3</span>
+      </div>
+      <div class="lab-objective">Apply CPU and memory limits to a systemd service using cgroup directives: CPUQuota, MemoryMax, and TasksMax.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-8-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-8-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 8.2 — systemd Resource Control</span>
+          </div>
+          <div class="terminal-body" id="term-8-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PART III: Access Control ═══ -->
+    <div class="part-header">
+      <div class="part-label">Part III — Access Control</div>
+      <div class="part-title">Topics 333.1–333.2</div>
+    </div>
+
+    <!-- Lab 10.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 10.1 — SELinux Troubleshooting</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 10</span>
+        <span class="tag tag-purple">Obj 333.2</span>
+        <span class="tag tag-orange">Exam Critical</span>
+      </div>
+      <div class="lab-objective">Diagnose AVC denials, use ausearch and sealert, relabel files with restorecon, and toggle booleans with setsebool to resolve SELinux issues.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-10-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-10-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 10.1 — SELinux Troubleshooting</span>
+          </div>
+          <div class="terminal-body" id="term-10-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 10.2 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 10.2 — Creating a Custom SELinux Policy Module</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 10</span>
+        <span class="tag tag-purple">Obj 333.2</span>
+      </div>
+      <div class="lab-objective">Generate a custom SELinux policy module from AVC denials using audit2allow, compile it, and install it with semodule.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-10-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-10-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 10.2 — Custom SELinux Module</span>
+          </div>
+          <div class="terminal-body" id="term-10-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PART IV: Network Security ═══ -->
+    <div class="part-header">
+      <div class="part-label">Part IV — Network Security</div>
+      <div class="part-title">Topics 334.1–334.4</div>
+    </div>
+
+    <!-- Lab 11.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 11.1 — Network Traffic Analysis with tcpdump</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 11</span>
+        <span class="tag tag-purple">Obj 334.1</span>
+      </div>
+      <div class="lab-objective">Capture and filter network traffic with tcpdump: filter by port, protocol, and host; write to pcap files; inspect DNS and HTTP traffic.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-11-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-11-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 11.1 — tcpdump Analysis</span>
+          </div>
+          <div class="terminal-body" id="term-11-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 14.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 14.1 — WireGuard Site-to-Site VPN</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 14</span>
+        <span class="tag tag-purple">Obj 334.4</span>
+        <span class="tag tag-orange">Exam Critical</span>
+      </div>
+      <div class="lab-objective">Set up a WireGuard site-to-site VPN: generate key pairs, configure peers, bring up the tunnel, and verify connectivity.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-14-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-14-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 14.1 — WireGuard VPN</span>
+          </div>
+          <div class="terminal-body" id="term-14-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PART V: Threats ═══ -->
+    <div class="part-header">
+      <div class="part-label">Part V — Threats &amp; Vulnerability Assessment</div>
+      <div class="part-title">Topics 335.1–335.2</div>
+    </div>
+
+    <!-- Lab 16.1 -->
+    <div class="lab-card">
+      <h3>⚡ Lab 16.1 — Comprehensive Network Reconnaissance</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 16</span>
+        <span class="tag tag-purple">Obj 335.2</span>
+      </div>
+      <div class="lab-objective">Perform a full network reconnaissance with Nmap: host discovery, SYN scan, service detection, OS fingerprinting, and NSE scripts.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-16-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-16-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 16.1 — Nmap Reconnaissance</span>
+          </div>
+          <div class="terminal-body" id="term-16-1"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <span class="footer-brand">ArcLight Press</span>
+    <p>© 2026 Eric Tomchik. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Lab 1.1: Symmetric & Asymmetric Encryption
+  initTerminal('term-1-1', [
+    {intro:"# Lab 1.1 — Symmetric & Asymmetric Encryption in Practice",cmd:"echo \"This is a classified document.\" > secret.txt",accept:["echo \"This is a classified document.\" > secret.txt","echo 'This is a classified document.' > secret.txt"],hint:"echo \"This is a classified document.\" > secret.txt",output:[""]},
+    {cmd:"openssl enc -aes-256-cbc -salt -pbkdf2 -in secret.txt -out secret.enc",accept:["openssl enc -aes-256-cbc -salt -pbkdf2 -in secret.txt -out secret.enc"],hint:"openssl enc -aes-256-cbc -salt -pbkdf2 -in secret.txt -out secret.enc",output:["enter AES-256-CBC encryption password: ********","Verifying - enter AES-256-CBC encryption password: ********"]},
+    {cmd:"openssl enc -d -aes-256-cbc -pbkdf2 -in secret.enc -out decrypted.txt",accept:["openssl enc -d -aes-256-cbc -pbkdf2 -in secret.enc -out decrypted.txt"],hint:"openssl enc -d -aes-256-cbc -pbkdf2 -in secret.enc -out decrypted.txt",output:["enter AES-256-CBC decryption password: ********"]},
+    {cmd:"cat decrypted.txt",accept:["cat decrypted.txt"],hint:"cat decrypted.txt",output:["<span class='success'>This is a classified document.</span>"]},
+    {cmd:"openssl genrsa -aes256 -out private.pem 4096",accept:["openssl genrsa -aes256 -out private.pem 4096"],hint:"openssl genrsa -aes256 -out private.pem 4096",output:["Generating RSA private key, 4096 bit long modulus (2 primes)","..........++++",".....................++++","e is 65537 (0x010001)","Enter pass phrase for private.pem: ********"]},
+    {cmd:"openssl rsa -in private.pem -pubout -out public.pem",accept:["openssl rsa -in private.pem -pubout -out public.pem"],hint:"openssl rsa -in private.pem -pubout -out public.pem",output:["Enter pass phrase for private.pem: ********","writing RSA key"]},
+    {cmd:"openssl dgst -sha256 -sign private.pem -out secret.sig secret.txt",accept:["openssl dgst -sha256 -sign private.pem -out secret.sig secret.txt"],hint:"openssl dgst -sha256 -sign private.pem -out secret.sig secret.txt",output:["Enter pass phrase for private.pem: ********"]},
+    {cmd:"openssl dgst -sha256 -verify public.pem -signature secret.sig secret.txt",accept:["openssl dgst -sha256 -verify public.pem -signature secret.sig secret.txt"],hint:"openssl dgst -sha256 -verify public.pem -signature secret.sig secret.txt",output:["<span class='success'>Verified OK</span>"]},
+    {cmd:"ssh-keygen -t ed25519 -C \"admin@example.com\" -f ./test_ed25519",accept:["ssh-keygen -t ed25519 -C \"admin@example.com\" -f ./test_ed25519","ssh-keygen -t ed25519"],hint:"ssh-keygen -t ed25519 -C \"admin@example.com\" -f ./test_ed25519",output:["Generating public/private ed25519 key pair.","Enter passphrase (empty for no passphrase):","Your identification has been saved in ./test_ed25519","Your public key has been saved in ./test_ed25519.pub","The key fingerprint is:","SHA256:aBcDeFgHiJkLmNoPqRsTuVwXyZ admin@example.com"]},
+  ]);
+
+  // Lab 2.1a: Inspecting X.509 Certificates
+  initTerminal('term-2-1a', [
+    {intro:"# Lab 2.1a — Inspecting X.509 Certificates",cmd:"openssl s_client -connect www.google.com:443 -showcerts",accept:["openssl s_client -connect www.google.com:443 -showcerts","openssl s_client -connect google.com:443 -showcerts"],hint:"openssl s_client -connect www.google.com:443 -showcerts",output:["CONNECTED(00000003)","depth=2 C = US, O = Google Trust Services LLC, CN = GTS Root R1","verify return:1","depth=1 C = US, O = Google Trust Services, CN = WR2","verify return:1","depth=0 CN = www.google.com","verify return:1","---","Certificate chain","  0 s:CN = www.google.com","    i:C = US, O = Google Trust Services, CN = WR2","  1 s:C = US, O = Google Trust Services, CN = WR2","    i:C = US, O = Google Trust Services LLC, CN = GTS Root R1","---","SSL handshake has read 4096 bytes","    Protocol  : TLSv1.3","    Cipher    : TLS_AES_256_GCM_SHA384"]},
+    {cmd:"openssl x509 -in cert.pem -text -noout",accept:["openssl x509 -in cert.pem -text -noout"],hint:"openssl x509 -in cert.pem -text -noout",output:["Certificate:","    Data:","        Version: 3 (0x2)","        Serial Number: 1a:2b:3c:4d:5e:6f","        Signature Algorithm: sha256WithRSAEncryption","        Issuer: C=US, O=Google Trust Services, CN=WR2","        Validity","            Not Before: May  1 00:00:00 2026 GMT","            Not After : Jul 30 00:00:00 2026 GMT","        Subject: CN=www.google.com","        X509v3 extensions:","            X509v3 Subject Alternative Name:","                DNS:www.google.com, DNS:google.com"]},
+    {cmd:"openssl x509 -in cert.pem -noout -dates",accept:["openssl x509 -in cert.pem -noout -dates"],hint:"openssl x509 -in cert.pem -noout -dates",output:["notBefore=May  1 00:00:00 2026 GMT","notAfter=Jul 30 00:00:00 2026 GMT"]},
+  ]);
+
+  // Lab 2.1b: Building a Two-Tier PKI
+  initTerminal('term-2-1b', [
+    {intro:"# Lab 2.1b — Building a Two-Tier PKI",cmd:"mkdir -p root/certs root/crl root/newcerts root/private",accept:["mkdir -p root/certs root/crl root/newcerts root/private"],hint:"mkdir -p root/certs root/crl root/newcerts root/private",output:[""]},
+    {cmd:"openssl genrsa -aes256 -out root/private/root-ca.key 4096",accept:["openssl genrsa -aes256 -out root/private/root-ca.key 4096"],hint:"openssl genrsa -aes256 -out root/private/root-ca.key 4096",output:["Generating RSA private key, 4096 bit long modulus...++++","Enter pass phrase: ********"]},
+    {cmd:"openssl req -new -x509 -key root/private/root-ca.key -out root/root-ca.crt -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Root CA\"",accept:["openssl req -new -x509 -key root/private/root-ca.key -out root/root-ca.crt -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Root CA\""],hint:"openssl req -new -x509 ... -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Root CA\"",output:["Enter pass phrase for root/private/root-ca.key: ********"]},
+    {cmd:"openssl genrsa -out inter/private/inter-ca.key 4096",accept:["openssl genrsa -out inter/private/inter-ca.key 4096"],hint:"openssl genrsa -out inter/private/inter-ca.key 4096",output:["Generating RSA private key, 4096 bit long modulus...++++"]},
+    {cmd:"openssl req -new -key inter/private/inter-ca.key -out inter/inter-ca.csr -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Intermediate CA\"",accept:["openssl req -new -key inter/private/inter-ca.key -out inter/inter-ca.csr -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Intermediate CA\""],hint:"openssl req -new ... -subj \"/C=US/ST=CA/O=Lab Corp/CN=Lab Intermediate CA\"",output:[""]},
+    {cmd:"openssl x509 -req -in inter/inter-ca.csr -CA root/root-ca.crt -CAkey root/private/root-ca.key -out inter/inter-ca.crt",accept:["openssl x509 -req -in inter/inter-ca.csr -CA root/root-ca.crt -CAkey root/private/root-ca.key -out inter/inter-ca.crt"],hint:"openssl x509 -req -in inter/inter-ca.csr -CA root/root-ca.crt ...",output:["<span class='success'>Certificate request self-signature ok</span>","subject=C=US, ST=CA, O=Lab Corp, CN=Lab Intermediate CA"]},
+    {cmd:"openssl verify -CAfile root/root-ca.crt inter/inter-ca.crt",accept:["openssl verify -CAfile root/root-ca.crt inter/inter-ca.crt"],hint:"openssl verify -CAfile root/root-ca.crt inter/inter-ca.crt",output:["<span class='success'>inter/inter-ca.crt: OK</span>"]},
+  ]);
+
+  // Lab 3.1: End-to-End HTTPS
+  initTerminal('term-3-1', [
+    {intro:"# Lab 3.1 — End-to-End HTTPS Deployment",cmd:"openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/server.key -out /etc/ssl/certs/server.crt",accept:["openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/server.key -out /etc/ssl/certs/server.crt"],hint:"openssl req -x509 -nodes -days 365 -newkey rsa:2048 ...",output:["Generating a RSA private key","......++++","writing new private key to '/etc/ssl/private/server.key'","Country Name: US","Common Name: lab.local"]},
+    {cmd:"a2enmod ssl",accept:["a2enmod ssl","sudo a2enmod ssl"],hint:"a2enmod ssl",output:["Enabling module ssl.","<span class='success'>Module ssl already enabled</span>"]},
+    {cmd:"a2ensite default-ssl",accept:["a2ensite default-ssl","sudo a2ensite default-ssl"],hint:"a2ensite default-ssl",output:["Enabling site default-ssl."]},
+    {cmd:"systemctl restart apache2",accept:["systemctl restart apache2","sudo systemctl restart apache2"],hint:"systemctl restart apache2",output:[""]},
+    {cmd:"openssl s_client -connect localhost:443",accept:["openssl s_client -connect localhost:443"],hint:"openssl s_client -connect localhost:443",output:["CONNECTED(00000003)","depth=0 CN = lab.local","    Protocol  : TLSv1.3","    Cipher    : TLS_AES_256_GCM_SHA384","<span class='success'>Verify return code: 18 (self-signed certificate)</span>"]},
+  ]);
+
+  // Lab 4.1: LUKS Key Management
+  initTerminal('term-4-1', [
+    {intro:"# Lab 4.1 — LUKS Multi-Slot Key Management",cmd:"cryptsetup luksFormat /dev/sdb1",accept:["cryptsetup luksFormat /dev/sdb1","sudo cryptsetup luksFormat /dev/sdb1"],hint:"cryptsetup luksFormat /dev/sdb1",output:["WARNING: This will overwrite data on /dev/sdb1 irrevocably.","Are you sure? (Type 'yes' in capital letters): YES","Enter passphrase for /dev/sdb1: ********","Verify passphrase: ********"]},
+    {cmd:"cryptsetup luksDump /dev/sdb1",accept:["cryptsetup luksDump /dev/sdb1","sudo cryptsetup luksDump /dev/sdb1"],hint:"cryptsetup luksDump /dev/sdb1",output:["LUKS header information","Version:       \t2","Epoch:         \t3","Data segments:  1","  0: crypt","Keyslots:","  0: luks2   ← active","  1: (empty)","  2: (empty)"]},
+    {cmd:"cryptsetup luksAddKey /dev/sdb1",accept:["cryptsetup luksAddKey /dev/sdb1","sudo cryptsetup luksAddKey /dev/sdb1"],hint:"cryptsetup luksAddKey /dev/sdb1",output:["Enter any existing passphrase: ********","Enter new passphrase for key slot: ********","Verify passphrase: ********"]},
+    {cmd:"cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file hdr-backup.img",accept:["cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file hdr-backup.img","sudo cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file hdr-backup.img"],hint:"cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file hdr-backup.img",output:["<span class='success'>LUKS header backup saved to hdr-backup.img</span>"]},
+    {cmd:"cryptsetup luksOpen /dev/sdb1 secure_vol",accept:["cryptsetup luksOpen /dev/sdb1 secure_vol","sudo cryptsetup luksOpen /dev/sdb1 secure_vol","cryptsetup open /dev/sdb1 secure_vol"],hint:"cryptsetup luksOpen /dev/sdb1 secure_vol",output:["Enter passphrase for /dev/sdb1: ********"]},
+    {cmd:"ls /dev/mapper/secure_vol",accept:["ls /dev/mapper/secure_vol"],hint:"ls /dev/mapper/secure_vol",output:["<span class='success'>/dev/mapper/secure_vol</span>"]},
+  ]);
+
+  // Lab 5.1: DANE TLSA
+  initTerminal('term-5-1', [
+    {intro:"# Lab 5.1 — Generating and Verifying DANE TLSA Records",cmd:"openssl x509 -in cert.pem -outform DER | openssl dgst -sha256",accept:["openssl x509 -in cert.pem -outform DER | openssl dgst -sha256"],hint:"openssl x509 -in cert.pem -outform DER | openssl dgst -sha256",output:["SHA2-256(stdin)= 8a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b"]},
+    {cmd:"dig TLSA _443._tcp.example.com",accept:["dig TLSA _443._tcp.example.com"],hint:"dig TLSA _443._tcp.example.com",output:[";; ANSWER SECTION:","_443._tcp.example.com. 3600 IN TLSA 3 1 1 8a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b","","<span class='comment'># Usage=3 (DANE-EE), Selector=1 (SubjectPublicKeyInfo), Match=1 (SHA-256)</span>"]},
+  ]);
+
+  // Lab 5.2: TSIG
+  initTerminal('term-5-2', [
+    {intro:"# Lab 5.2 — TSIG-Authenticated Zone Transfer",cmd:"tsig-keygen -a hmac-sha256 xfer-key",accept:["tsig-keygen -a hmac-sha256 xfer-key"],hint:"tsig-keygen -a hmac-sha256 xfer-key",output:["key \"xfer-key\" {","    algorithm hmac-sha256;","    secret \"sM7bR3kQ9pLnXvWjYhTfZdGcAeUiOm1N2x4w5y6z8==\";","};"]},
+    {cmd:"dig @primary AXFR example.com -k /etc/named/xfer-key.conf",accept:["dig @primary AXFR example.com -k /etc/named/xfer-key.conf","dig AXFR example.com -k /etc/named/xfer-key.conf"],hint:"dig @primary AXFR example.com -k /etc/named/xfer-key.conf",output:["example.com.       86400   IN  SOA ns1.example.com. admin.example.com. 2026060101 3600 900 604800 86400","example.com.       86400   IN  NS  ns1.example.com.","example.com.       86400   IN  NS  ns2.example.com.","example.com.       86400   IN  A   192.0.2.1","<span class='success'>; Transfer complete: 12 records</span>"]},
+  ]);
+
+  // Lab 5.3: DNSSEC Zone Signing
+  initTerminal('term-5-3', [
+    {intro:"# Lab 5.3 — Complete DNSSEC Zone Signing (Exam Critical!)",cmd:"dnssec-keygen -a ECDSAP256SHA256 -n ZONE example.com",accept:["dnssec-keygen -a ECDSAP256SHA256 -n ZONE example.com"],hint:"dnssec-keygen -a ECDSAP256SHA256 -n ZONE example.com",output:["Generating key pair..","<span class='success'>Kexample.com.+013+45678</span>  (ZSK)"]},
+    {cmd:"dnssec-keygen -a ECDSAP256SHA256 -f KSK -n ZONE example.com",accept:["dnssec-keygen -a ECDSAP256SHA256 -f KSK -n ZONE example.com"],hint:"dnssec-keygen -a ECDSAP256SHA256 -f KSK -n ZONE example.com",output:["Generating key pair..","<span class='success'>Kexample.com.+013+12345</span>  (KSK)"]},
+    {cmd:"dnssec-signzone -o example.com db.example.com",accept:["dnssec-signzone -o example.com db.example.com","dnssec-signzone -o example.com zone.file"],hint:"dnssec-signzone -o example.com db.example.com",output:["Verifying the zone using the following algorithms: ECDSAP256SHA256.","Zone fully signed:","Algorithm: ECDSAP256SHA256: KSKs: 1 active, 0 stand-by, 0 revoked","                           ZSKs: 1 active, 0 stand-by, 0 revoked","<span class='success'>db.example.com.signed</span>"]},
+    {cmd:"dig +dnssec example.com @localhost",accept:["dig +dnssec example.com @localhost","dig +dnssec example.com"],hint:"dig +dnssec example.com @localhost",output:[";; flags: qr aa rd ra; QUERY: 1, ANSWER: 2","","example.com.  86400 IN A    192.0.2.1","example.com.  86400 IN RRSIG A 13 2 86400 20260701 20260601 45678 example.com. aBcDeFg...","",";; flags: <span class='success'>ad</span>  ← Authenticated Data flag set"]},
+  ]);
+
+  // Lab 6.1: systemd Hardening
+  initTerminal('term-6-1', [
+    {intro:"# Lab 6.1 — Hardening a Service with systemd-analyze",cmd:"systemd-analyze security nginx.service",accept:["systemd-analyze security nginx.service","systemd-analyze security httpd.service"],hint:"systemd-analyze security nginx.service",output:["  NAME                          DESCRIPTION                     EXPOSURE","✗ PrivateDevices=               Service has access to hardware  0.2 UNSAFE","✗ ProtectSystem=                Service has full write access   0.2 UNSAFE","✗ NoNewPrivileges=              Service may gain privileges     0.1 UNSAFE","✗ ProtectHome=                  Service has access to home dirs 0.1 UNSAFE","","<span class='error'>→ Overall exposure level for nginx.service: 9.2 UNSAFE 😨</span>"]},
+    {cmd:"systemctl edit nginx.service",accept:["systemctl edit nginx.service","sudo systemctl edit nginx.service"],hint:"systemctl edit nginx.service",output:["<span class='comment'># Add hardening directives:</span>","[Service]","ProtectSystem=strict","PrivateDevices=yes","NoNewPrivileges=yes","ProtectHome=yes","ProtectKernelModules=yes","ProtectKernelTunables=yes"]},
+    {cmd:"systemctl daemon-reload && systemctl restart nginx",accept:["systemctl daemon-reload && systemctl restart nginx","systemctl daemon-reload"],hint:"systemctl daemon-reload && systemctl restart nginx",output:[""]},
+    {cmd:"systemd-analyze security nginx.service",accept:["systemd-analyze security nginx.service"],hint:"systemd-analyze security nginx.service — check the improved score",output:["  NAME                          DESCRIPTION                     EXPOSURE","✓ PrivateDevices=               Service has no device access    OK","✓ ProtectSystem=                Filesystem is read-only         OK","✓ NoNewPrivileges=              Service cannot gain privileges  OK","✓ ProtectHome=                  Home directories inaccessible   OK","","<span class='success'>→ Overall exposure level for nginx.service: 2.8 OK 🙂</span>"]},
+  ]);
+
+  // Lab 6.2: SSH CA
+  initTerminal('term-6-2', [
+    {intro:"# Lab 6.2 — SSH Certificate Authority Setup",cmd:"ssh-keygen -t ed25519 -f ca_host_key -C \"SSH Host CA\"",accept:["ssh-keygen -t ed25519 -f ca_host_key -C \"SSH Host CA\"","ssh-keygen -t ed25519 -f ca_host_key"],hint:"ssh-keygen -t ed25519 -f ca_host_key -C \"SSH Host CA\"",output:["Generating public/private ed25519 key pair.","Your identification has been saved in ca_host_key","<span class='success'>Your public key has been saved in ca_host_key.pub</span>"]},
+    {cmd:"ssh-keygen -s ca_host_key -I web-server -h /etc/ssh/ssh_host_ed25519_key.pub",accept:["ssh-keygen -s ca_host_key -I web-server -h /etc/ssh/ssh_host_ed25519_key.pub"],hint:"ssh-keygen -s ca_host_key -I web-server -h host_key.pub",output:["Signed host key /etc/ssh/ssh_host_ed25519_key-cert.pub:","        id \"web-server\"","        serial 0","        <span class='success'>valid forever</span>"]},
+    {cmd:"ssh-keygen -L -f /etc/ssh/ssh_host_ed25519_key-cert.pub",accept:["ssh-keygen -L -f /etc/ssh/ssh_host_ed25519_key-cert.pub"],hint:"ssh-keygen -L -f (cert file) — view certificate details",output:["        Type: ssh-ed25519-cert-v01@openssh.com host certificate","        Public key: ED25519-CERT SHA256:xYz...","        Signing CA: ED25519 SHA256:aBc...","        Key ID: \"web-server\"","        Valid: forever","        <span class='success'>Principals: (none)</span>"]},
+  ]);
+
+  // Lab 7.0: Audit Ruleset
+  initTerminal('term-7-0', [
+    {intro:"# Lab 7.0 — Building a Production Audit Ruleset",cmd:"auditctl -w /etc/shadow -p wa -k shadow_changes",accept:["auditctl -w /etc/shadow -p wa -k shadow_changes","auditctl -w /etc/shadow -p wa -k shadow"],hint:"auditctl -w /etc/shadow -p wa -k shadow_changes",output:[""]},
+    {cmd:"auditctl -w /etc/passwd -p wa -k identity",accept:["auditctl -w /etc/passwd -p wa -k identity"],hint:"auditctl -w /etc/passwd -p wa -k identity",output:[""]},
+    {cmd:"auditctl -a always,exit -F arch=b64 -S execve -k exec_commands",accept:["auditctl -a always,exit -F arch=b64 -S execve -k exec_commands"],hint:"auditctl -a always,exit -F arch=b64 -S execve -k exec_commands",output:[""]},
+    {cmd:"ausearch -k shadow_changes",accept:["ausearch -k shadow_changes","ausearch -k shadow"],hint:"ausearch -k shadow_changes",output:["----","time->Sun Jun  1 12:00:00 2026","type=SYSCALL msg=audit(1717228800.000:1024): arch=c000003e syscall=257","  key=\"shadow_changes\"","type=PATH msg=audit(1717228800.000:1024): name=\"/etc/shadow\""]},
+    {cmd:"aureport --summary",accept:["aureport --summary"],hint:"aureport --summary",output:["Summary Report","======================","Range of time: 06/01/2026 00:00:00 - 06/01/2026 23:59:59","Number of changes in configuration: 3","Number of accounts, groups, or roles changed: 0","Number of logins: 12","Number of failed logins: 2","Number of anomaly events: 0","<span class='success'>Number of responses to anomaly events: 0</span>"]},
+  ]);
+
+  // Lab 7.1: AIDE
+  initTerminal('term-7-1', [
+    {intro:"# Lab 7.1 — AIDE Integrity Monitoring",cmd:"aide --init",accept:["aide --init","sudo aide --init"],hint:"aide --init",output:["AIDE, version 0.18","### AIDE database at /var/lib/aide/aide.db.new.gz initialized.","<span class='success'>New AIDE database written.</span>"]},
+    {cmd:"cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz",accept:["cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz","sudo cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz"],hint:"cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz",output:[""]},
+    {cmd:"aide --check",accept:["aide --check","sudo aide --check"],hint:"aide --check",output:["AIDE found differences between database and filesystem!!","","Summary:","  Total number of entries:  42137","  Added entries:            1","  Removed entries:          0","  Changed entries:          2","","<span class='error'>Changed entries:</span>","  f ... : /etc/hosts","  d ... : /etc/cron.d"]},
+  ]);
+
+  // Lab 8.1: Fork Bomb Protection
+  initTerminal('term-8-1', [
+    {intro:"# Lab 8.1 — Fork Bomb Protection with ulimit",cmd:"ulimit -u",accept:["ulimit -u"],hint:"ulimit -u",output:["unlimited  ← dangerous!"]},
+    {cmd:"cat /etc/security/limits.conf",accept:["cat /etc/security/limits.conf","grep -v '#' /etc/security/limits.conf"],hint:"cat /etc/security/limits.conf",output:["# /etc/security/limits.conf","# <domain> <type> <item> <value>","*          soft   nproc  1024","*          hard   nproc  2048","@students  hard   nproc  256"]},
+    {cmd:"ulimit -u 256",accept:["ulimit -u 256"],hint:"ulimit -u 256",output:[""]},
+    {cmd:"ulimit -u",accept:["ulimit -u"],hint:"ulimit -u — verify the new limit",output:["<span class='success'>256</span>  ← fork bomb can only spawn 256 processes"]},
+  ]);
+
+  // Lab 8.2: systemd Resource Control
+  initTerminal('term-8-2', [
+    {intro:"# Lab 8.2 — Controlling Service Resources with systemd",cmd:"systemctl show myapp.service -p CPUQuota -p MemoryMax -p TasksMax",accept:["systemctl show myapp.service -p CPUQuota -p MemoryMax -p TasksMax"],hint:"systemctl show myapp.service -p CPUQuota -p MemoryMax -p TasksMax",output:["CPUQuota=","MemoryMax=infinity","TasksMax=infinity  ← no limits!"]},
+    {cmd:"systemctl set-property myapp.service CPUQuota=50% MemoryMax=512M TasksMax=100",accept:["systemctl set-property myapp.service CPUQuota=50% MemoryMax=512M TasksMax=100"],hint:"systemctl set-property myapp.service CPUQuota=50% MemoryMax=512M TasksMax=100",output:[""]},
+    {cmd:"systemd-cgtop",accept:["systemd-cgtop"],hint:"systemd-cgtop — view real-time cgroup resource usage",output:["Control Group              Tasks   %CPU  Memory","/                            245   12.3   1.8G","/system.slice                 83    8.1   890M","  /system.slice/myapp.service  12    4.2   <span class='success'>210M/512M</span>","  /system.slice/nginx.service   4    0.3    45M"]},
+  ]);
+
+  // Lab 10.1: SELinux Troubleshooting
+  initTerminal('term-10-1', [
+    {intro:"# Lab 10.1 — SELinux Troubleshooting (Exam Critical!)",cmd:"getenforce",accept:["getenforce"],hint:"getenforce",output:["<span class='success'>Enforcing</span>"]},
+    {cmd:"ausearch -m AVC -ts today",accept:["ausearch -m AVC -ts today","ausearch -m AVC"],hint:"ausearch -m AVC -ts today",output:["----","type=AVC msg=audit(1717228800.000:2048):","  avc: denied { read } for pid=4523 comm=\"httpd\"","  name=\"index.html\" dev=\"sda1\"","  scontext=system_u:system_r:<span class='error'>httpd_t</span>:s0","  tcontext=system_u:object_r:<span class='error'>default_t</span>:s0 tclass=file"]},
+    {cmd:"ls -Z /srv/www/index.html",accept:["ls -Z /srv/www/index.html"],hint:"ls -Z /srv/www/index.html — check the file context",output:["system_u:object_r:<span class='error'>default_t</span>:s0 /srv/www/index.html","<span class='comment'># Should be httpd_sys_content_t, not default_t!</span>"]},
+    {cmd:"semanage fcontext -a -t httpd_sys_content_t \"/srv/www(/.*)?\"",accept:["semanage fcontext -a -t httpd_sys_content_t \"/srv/www(/.*)?\""],hint:"semanage fcontext -a -t httpd_sys_content_t \"/srv/www(/.*)?\"",output:[""]},
+    {cmd:"restorecon -Rv /srv/www",accept:["restorecon -Rv /srv/www"],hint:"restorecon -Rv /srv/www",output:["Relabeled /srv/www from default_t to httpd_sys_content_t","<span class='success'>Relabeled /srv/www/index.html from default_t to httpd_sys_content_t</span>"]},
+  ]);
+
+  // Lab 10.2: Custom SELinux Module
+  initTerminal('term-10-2', [
+    {intro:"# Lab 10.2 — Creating a Custom SELinux Policy Module",cmd:"ausearch -m AVC -ts today | audit2allow",accept:["ausearch -m AVC -ts today | audit2allow","audit2allow -a"],hint:"ausearch -m AVC -ts today | audit2allow",output:["#============= myapp_t ==============","allow myapp_t user_home_t:file { read open getattr };"]},
+    {cmd:"audit2allow -a -M myapp_policy",accept:["audit2allow -a -M myapp_policy"],hint:"audit2allow -a -M myapp_policy",output:["******************** IMPORTANT ***********************","To make this policy package active, execute:","<span class='success'>semodule -i myapp_policy.pp</span>"]},
+    {cmd:"semodule -i myapp_policy.pp",accept:["semodule -i myapp_policy.pp","sudo semodule -i myapp_policy.pp"],hint:"semodule -i myapp_policy.pp",output:["<span class='success'>Module myapp_policy installed successfully.</span>"]},
+    {cmd:"semodule -l | grep myapp",accept:["semodule -l | grep myapp"],hint:"semodule -l | grep myapp — verify the module is loaded",output:["<span class='success'>myapp_policy</span>"]},
+  ]);
+
+  // Lab 11.1: tcpdump
+  initTerminal('term-11-1', [
+    {intro:"# Lab 11.1 — Network Traffic Analysis with tcpdump",cmd:"tcpdump -i eth0 -c 5 port 53",accept:["tcpdump -i eth0 -c 5 port 53","tcpdump -i eth0 port 53 -c 5"],hint:"tcpdump -i eth0 -c 5 port 53",output:["tcpdump: verbose output suppressed","listening on eth0, link-type EN10MB","12:00:01 IP lab.local.43210 > 8.8.8.8.53: 12345+ A? example.com. (30)","12:00:01 IP 8.8.8.8.53 > lab.local.43210: 12345 1/0/0 A 93.184.216.34","12:00:02 IP lab.local.55432 > 8.8.8.8.53: 12346+ AAAA? example.com. (30)","12:00:02 IP 8.8.8.8.53 > lab.local.55432: 12346 1/0/0 AAAA 2606:2800:220:1:...","12:00:03 IP lab.local.61234 > 8.8.8.8.53: 12347+ A? google.com. (28)","<span class='success'>5 packets captured</span>"]},
+    {cmd:"tcpdump -i eth0 -w capture.pcap",accept:["tcpdump -i eth0 -w capture.pcap"],hint:"tcpdump -i eth0 -w capture.pcap",output:["tcpdump: listening on eth0, link-type EN10MB, snapshot length 262144 bytes","^C","<span class='success'>247 packets captured, 0 packets dropped</span>"]},
+    {cmd:"tcpdump -r capture.pcap -n host 192.168.1.100",accept:["tcpdump -r capture.pcap -n host 192.168.1.100","tcpdump -r capture.pcap"],hint:"tcpdump -r capture.pcap -n host 192.168.1.100",output:["reading from file capture.pcap","12:00:15 IP 192.168.1.100.22 > 192.168.1.1.54321: Flags [P.], seq 1:37","12:00:15 IP 192.168.1.1.54321 > 192.168.1.100.22: Flags [.], ack 37"]},
+  ]);
+
+  // Lab 14.1: WireGuard VPN
+  initTerminal('term-14-1', [
+    {intro:"# Lab 14.1 — WireGuard Site-to-Site VPN (Exam Critical!)",cmd:"wg genkey | tee server-private.key | wg pubkey > server-public.key",accept:["wg genkey | tee server-private.key | wg pubkey > server-public.key"],hint:"wg genkey | tee server-private.key | wg pubkey > server-public.key",output:[""]},
+    {cmd:"cat server-private.key",accept:["cat server-private.key"],hint:"cat server-private.key",output:["yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk="]},
+    {cmd:"cat server-public.key",accept:["cat server-public.key"],hint:"cat server-public.key",output:["xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg="]},
+    {cmd:"wg genkey | tee client-private.key | wg pubkey > client-public.key",accept:["wg genkey | tee client-private.key | wg pubkey > client-public.key"],hint:"wg genkey | tee client-private.key | wg pubkey > client-public.key",output:[""]},
+    {cmd:"wg-quick up wg0",accept:["wg-quick up wg0","sudo wg-quick up wg0"],hint:"wg-quick up wg0",output:["[#] ip link add wg0 type wireguard","[#] wg setconf wg0 /dev/fd/63","[#] ip -4 address add 10.0.0.1/24 dev wg0","[#] ip link set mtu 1420 up dev wg0","<span class='success'>[#] wg0 interface is up</span>"]},
+    {cmd:"wg show",accept:["wg show","wg"],hint:"wg show",output:["interface: wg0","  public key: xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=","  private key: (hidden)","  listening port: 51820","","peer: aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890abcdefg=","  endpoint: 203.0.113.50:51820","  allowed ips: 10.0.0.2/32","  latest handshake: 12 seconds ago","  <span class='success'>transfer: 1.24 MiB received, 3.50 MiB sent</span>"]},
+  ]);
+
+  // Lab 16.1: Nmap Reconnaissance
+  initTerminal('term-16-1', [
+    {intro:"# Lab 16.1 — Comprehensive Network Reconnaissance",cmd:"nmap -sn 192.168.1.0/24",accept:["nmap -sn 192.168.1.0/24"],hint:"nmap -sn 192.168.1.0/24 — host discovery",output:["Starting Nmap 7.94 ( https://nmap.org )","Nmap scan report for 192.168.1.1   Host is up (0.001s latency)","Nmap scan report for 192.168.1.10  Host is up (0.003s latency)","Nmap scan report for 192.168.1.50  Host is up (0.002s latency)","Nmap scan report for 192.168.1.100 Host is up (0.001s latency)","<span class='success'>Nmap done: 256 IP addresses (4 hosts up)</span>"]},
+    {cmd:"nmap -sS -sV 192.168.1.100",accept:["nmap -sS -sV 192.168.1.100","nmap -sS 192.168.1.100","nmap -sV 192.168.1.100"],hint:"nmap -sS -sV 192.168.1.100 — SYN scan + version detect",output:["Starting Nmap 7.94","PORT    STATE  SERVICE     VERSION","22/tcp  open   ssh         OpenSSH 9.6 (protocol 2.0)","53/tcp  open   domain      BIND 9.18.24","80/tcp  open   http        Apache httpd 2.4.58","443/tcp open   ssl/https   Apache httpd 2.4.58","3306/tcp closed mysql","<span class='success'>Service detection performed.</span>"]},
+    {cmd:"nmap -O 192.168.1.100",accept:["nmap -O 192.168.1.100"],hint:"nmap -O 192.168.1.100 — OS detection",output:["Device type: general purpose","Running: Linux 5.X|6.X","OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel:6","<span class='success'>OS details: Linux 5.15 - 6.8</span>","Network Distance: 1 hop"]},
+    {cmd:"nmap -sC 192.168.1.100",accept:["nmap -sC 192.168.1.100","nmap --script=default 192.168.1.100"],hint:"nmap -sC 192.168.1.100 — default NSE scripts",output:["PORT    STATE SERVICE","22/tcp  open  ssh","| ssh-hostkey:","|   256 ed25519 SHA256:aBcDeFgHiJk (ED25519)","80/tcp  open  http","| http-title: Welcome to Lab Server","|_http-server-header: Apache/2.4.58","443/tcp open  https","| ssl-cert: Subject: CN=lab.local","| Not valid after: 2027-06-01","<span class='success'>NSE: Script scanning completed.</span>"]},
+    {cmd:"nmap -A 192.168.1.100",accept:["nmap -A 192.168.1.100"],hint:"nmap -A 192.168.1.100 — aggressive scan (all of the above)",output:["Starting Nmap 7.94 — Aggressive scan","PORT    STATE SERVICE VERSION","22/tcp  open  ssh     OpenSSH 9.6","80/tcp  open  http    Apache 2.4.58","443/tcp open  https   Apache 2.4.58","OS: Linux 6.x | Traceroute: 1 hop","<span class='success'>Nmap done: 1 IP address (1 host up) scanned in 23.45 seconds</span>"]},
+  ]);
+
+});
+</script>
+</body>
+</html>

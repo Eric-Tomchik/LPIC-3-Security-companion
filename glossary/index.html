@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary — LPIC-3 Security Companion</title>
+  <meta name="description" content="Searchable glossary of 70+ key terms from the LPIC-3 Security 303-300 Study Guide.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="../index.html" class="nav-brand"><span class="icon">🔐</span> LPIC-3 Security Companion</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../chapters/index.html">Chapters</a>
+      <a href="../reference/index.html">Reference</a>
+      <a href="../labs/index.html">Labs</a>
+      <a href="index.html" class="active">Glossary</a>
+      <a href="../flashcards/index.html">Flashcards</a>
+      <a href="../quiz/index.html">Quiz</a>
+      <a href="../errata/index.html">Errata</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding:3rem 0 2rem">
+  <div class="container">
+    <h1>🔍 Searchable Glossary</h1>
+    <p class="subtitle">Every key term from the study guide — searchable and filterable. Find definitions instantly.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:800px">
+    <input type="text" class="glossary-search" id="glossary-search" placeholder="🔎 Search terms or definitions..." autofocus>
+    <div class="glossary-count" id="glossary-count">Showing 73 of 73 terms</div>
+
+    <div id="glossary-list">
+      <div class="glossary-item"><div class="glossary-term">AAA</div><div class="glossary-def">Authentication, Authorization, and Accounting — the three functions of access control systems like RADIUS</div><div class="glossary-chapter">Ch. 11</div></div>
+      <div class="glossary-item"><div class="glossary-term">ACL</div><div class="glossary-def">Access Control List — extends Unix DAC with per-user/group file permissions via <code>setfacl</code> / <code>getfacl</code></div><div class="glossary-chapter">Ch. 9</div></div>
+      <div class="glossary-item"><div class="glossary-term">ACME</div><div class="glossary-def">Automatic Certificate Management Environment — protocol used by Let's Encrypt for automated certificate issuance and renewal</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">AEAD</div><div class="glossary-def">Authenticated Encryption with Associated Data — cipher mode providing both confidentiality and integrity (e.g., AES-GCM, ChaCha20-Poly1305)</div><div class="glossary-chapter">Ch. 1</div></div>
+      <div class="glossary-item"><div class="glossary-term">AH</div><div class="glossary-def">Authentication Header — IPsec protocol providing integrity and authentication without encryption</div><div class="glossary-chapter">Ch. 14</div></div>
+      <div class="glossary-item"><div class="glossary-term">AIDE</div><div class="glossary-def">Advanced Intrusion Detection Environment — file integrity checker that detects unauthorized changes by comparing filesystem state to a known baseline</div><div class="glossary-chapter">Ch. 7</div></div>
+      <div class="glossary-item"><div class="glossary-term">AppArmor</div><div class="glossary-def">Path-based Mandatory Access Control system for Linux, using profiles to confine applications. Alternative to SELinux</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">Argon2</div><div class="glossary-def">Memory-hard key derivation function resistant to GPU/ASIC attacks, used by LUKS2 for passphrase hashing. Variants: Argon2i, Argon2d, Argon2id</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">ARP</div><div class="glossary-def">Address Resolution Protocol — maps IPv4 addresses to MAC addresses on local networks</div><div class="glossary-chapter">Ch. 15</div></div>
+      <div class="glossary-item"><div class="glossary-term">ASLR</div><div class="glossary-def">Address Space Layout Randomization — memory protection that randomizes process memory layout, controlled by <code>kernel.randomize_va_space</code></div><div class="glossary-chapter">Ch. 6</div></div>
+      <div class="glossary-item"><div class="glossary-term">AVC</div><div class="glossary-def">Access Vector Cache — SELinux component that caches access decisions; AVC denial messages in the audit log indicate policy violations</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">CA</div><div class="glossary-def">Certificate Authority — entity that issues and signs digital certificates within a PKI</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">CAA</div><div class="glossary-def">Certification Authority Authorization — DNS record type specifying which CAs are authorized to issue certificates for a domain</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">cgroup</div><div class="glossary-def">Control Group — Linux kernel feature for limiting, isolating, and accounting resource usage of process groups. v2 uses a unified hierarchy</div><div class="glossary-chapter">Ch. 8</div></div>
+      <div class="glossary-item"><div class="glossary-term">chroot</div><div class="glossary-def">Change root — Unix operation that changes the apparent root directory for a process, providing basic filesystem isolation</div><div class="glossary-chapter">Ch. 6</div></div>
+      <div class="glossary-item"><div class="glossary-term">conntrack</div><div class="glossary-def">Connection tracking — netfilter subsystem that tracks the state (NEW, ESTABLISHED, RELATED) of network connections for stateful filtering</div><div class="glossary-chapter">Ch. 13</div></div>
+      <div class="glossary-item"><div class="glossary-term">CRL</div><div class="glossary-def">Certificate Revocation List — a signed list of serial numbers of revoked certificates, published by a CA at regular intervals</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">cryptmount</div><div class="glossary-def">Debian utility for simplified management of encrypted filesystems, allowing non-root users to mount pre-configured LUKS volumes</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">CSR</div><div class="glossary-def">Certificate Signing Request — a message containing the public key and subject information, sent to a CA to request certificate issuance</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">CT</div><div class="glossary-def">Certificate Transparency — public, append-only logs of all issued certificates, designed to detect mis-issuance and rogue CAs</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">DAC</div><div class="glossary-def">Discretionary Access Control — traditional Unix permission model (owner/group/other, SUID/SGID, sticky bit) where owners control access</div><div class="glossary-chapter">Ch. 9</div></div>
+      <div class="glossary-item"><div class="glossary-term">DANE</div><div class="glossary-def">DNS-based Authentication of Named Entities — uses TLSA records to associate TLS certificates with DNS names, bypassing the CA system</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">DDoS</div><div class="glossary-def">Distributed Denial of Service — DoS attack launched from many sources simultaneously to overwhelm the target</div><div class="glossary-chapter">Ch. 15</div></div>
+      <div class="glossary-item"><div class="glossary-term">DEP</div><div class="glossary-def">Data Execution Prevention — hardware/OS feature that prevents execution of code in data memory regions (NX bit)</div><div class="glossary-chapter">Ch. 6</div></div>
+      <div class="glossary-item"><div class="glossary-term">DNAT</div><div class="glossary-def">Destination NAT — iptables/nftables operation that rewrites the destination address/port of packets (port forwarding)</div><div class="glossary-chapter">Ch. 13</div></div>
+      <div class="glossary-item"><div class="glossary-term">DNSSEC</div><div class="glossary-def">DNS Security Extensions — adds cryptographic authentication and integrity to DNS responses using RRSIG, DNSKEY, DS, and NSEC records</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">DoH</div><div class="glossary-def">DNS over HTTPS — encrypts DNS queries using HTTPS on port 443</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">DoT</div><div class="glossary-def">DNS over TLS — encrypts DNS queries using TLS on port 853</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">DS</div><div class="glossary-def">Delegation Signer — DNSSEC record stored in the parent zone containing a hash of the child zone's KSK, establishing the chain of trust</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">ECDH</div><div class="glossary-def">Elliptic Curve Diffie-Hellman — key exchange protocol using elliptic curves, providing equivalent security to DH with smaller keys</div><div class="glossary-chapter">Ch. 1</div></div>
+      <div class="glossary-item"><div class="glossary-term">ECDSA</div><div class="glossary-def">Elliptic Curve Digital Signature Algorithm — signing algorithm using elliptic curves, used in DNSSEC (ECDSAP256SHA256) and TLS</div><div class="glossary-chapter">Ch. 1</div></div>
+      <div class="glossary-item"><div class="glossary-term">eCryptfs</div><div class="glossary-def">Enterprise Cryptographic Filesystem — stacked filesystem that encrypts individual files (not block devices), with per-file FEK/FEFEK key architecture</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">ESP</div><div class="glossary-def">Encapsulating Security Payload — IPsec protocol providing confidentiality, integrity, and authentication; uses protocol number 50</div><div class="glossary-chapter">Ch. 14</div></div>
+      <div class="glossary-item"><div class="glossary-term">FEFEK</div><div class="glossary-def">File Encryption Key Encryption Key — eCryptfs key that encrypts the per-file FEK, derived from the user's mount passphrase</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">FEK</div><div class="glossary-def">File Encryption Key — eCryptfs per-file symmetric key stored in the file header, encrypted by the FEFEK</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">HMAC</div><div class="glossary-def">Hash-based Message Authentication Code — keyed hash function providing message integrity and authentication (used by TSIG)</div><div class="glossary-chapter">Ch. 1</div></div>
+      <div class="glossary-item"><div class="glossary-term">IDS</div><div class="glossary-def">Intrusion Detection System — monitors network or host activity for suspicious behavior and generates alerts</div><div class="glossary-chapter">Ch. 12</div></div>
+      <div class="glossary-item"><div class="glossary-term">IKE</div><div class="glossary-def">Internet Key Exchange — protocol for negotiating IPsec security associations. IKEv2 is the current version, used by strongSwan</div><div class="glossary-chapter">Ch. 14</div></div>
+      <div class="glossary-item"><div class="glossary-term">IPS</div><div class="glossary-def">Intrusion Prevention System — IDS with inline capability to block detected threats in real time</div><div class="glossary-chapter">Ch. 12</div></div>
+      <div class="glossary-item"><div class="glossary-term">IP masquerade</div><div class="glossary-def">Dynamic source NAT using the outgoing interface's IP address — the MASQUERADE target in iptables</div><div class="glossary-chapter">Ch. 13</div></div>
+      <div class="glossary-item"><div class="glossary-term">KDF</div><div class="glossary-def">Key Derivation Function — algorithm that derives cryptographic keys from passwords or other input (PBKDF2, Argon2, scrypt)</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">KPTI</div><div class="glossary-def">Kernel Page Table Isolation — Meltdown mitigation that separates kernel and user-space page tables</div><div class="glossary-chapter">Ch. 6</div></div>
+      <div class="glossary-item"><div class="glossary-term">KSK</div><div class="glossary-def">Key Signing Key — DNSSEC key pair that signs the DNSKEY RRset; the public key's hash forms the DS record in the parent zone</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">LSM</div><div class="glossary-def">Linux Security Modules — kernel framework providing hooks for MAC implementations (SELinux, AppArmor, Smack, TOMOYO)</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">LUKS</div><div class="glossary-def">Linux Unified Key Setup — standard format for disk encryption on Linux, supporting multiple key slots, header metadata, and passphrase management</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">MAC</div><div class="glossary-def">Mandatory Access Control — system-enforced access policy (SELinux, AppArmor, Smack) that overrides user discretion, unlike DAC</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">MitM</div><div class="glossary-def">Man-in-the-Middle — attack where the attacker intercepts and potentially modifies communication between two parties</div><div class="glossary-chapter">Ch. 15</div></div>
+      <div class="glossary-item"><div class="glossary-term">MLS</div><div class="glossary-def">Multi-Level Security — SELinux policy supporting classification levels (e.g., Unclassified, Secret, Top Secret) for government/military use</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">mTLS</div><div class="glossary-def">Mutual TLS — both client and server authenticate with X.509 certificates; enabled with <code>SSLVerifyClient require</code> in Apache</div><div class="glossary-chapter">Ch. 3</div></div>
+      <div class="glossary-item"><div class="glossary-term">NAT</div><div class="glossary-def">Network Address Translation — modifies IP addresses/ports in packet headers during routing; implemented in the iptables <code>nat</code> table</div><div class="glossary-chapter">Ch. 13</div></div>
+      <div class="glossary-item"><div class="glossary-term">NBDE</div><div class="glossary-def">Network-Bound Disk Encryption — auto-unlocks LUKS volumes when a Tang server is reachable on the network, using Clevis as the client</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">NDP</div><div class="glossary-def">Neighbor Discovery Protocol — IPv6 protocol for address resolution, router discovery, and autoconfiguration (replaces ARP)</div><div class="glossary-chapter">Ch. 11</div></div>
+      <div class="glossary-item"><div class="glossary-term">NIDS</div><div class="glossary-def">Network Intrusion Detection System — monitors network traffic for malicious patterns (e.g., Snort, Suricata)</div><div class="glossary-chapter">Ch. 12</div></div>
+      <div class="glossary-item"><div class="glossary-term">NSE</div><div class="glossary-def">Nmap Scripting Engine — Lua-based scripting for extended Nmap functionality; invoked with <code>-sC</code> for default scripts</div><div class="glossary-chapter">Ch. 16</div></div>
+      <div class="glossary-item"><div class="glossary-term">NSEC/NSEC3</div><div class="glossary-def">Next Secure — DNSSEC records providing authenticated denial of existence (proving a domain name does not exist)</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">NVT</div><div class="glossary-def">Network Vulnerability Test — OpenVAS/GVM test scripts written in NASL (Nessus Attack Scripting Language)</div><div class="glossary-chapter">Ch. 12</div></div>
+      <div class="glossary-item"><div class="glossary-term">OCSP</div><div class="glossary-def">Online Certificate Status Protocol — real-time, per-certificate revocation checking via HTTP. OCSP stapling has the server cache responses</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">pam_tty_audit</div><div class="glossary-def">PAM module that enables keystroke logging for TTY sessions, recording all user input to the audit log</div><div class="glossary-chapter">Ch. 7</div></div>
+      <div class="glossary-item"><div class="glossary-term">PBKDF2</div><div class="glossary-def">Password-Based Key Derivation Function 2 — iterative KDF used by LUKS1, GRUB2, and older systems; less GPU-resistant than Argon2</div><div class="glossary-chapter">Ch. 4</div></div>
+      <div class="glossary-item"><div class="glossary-term">PFS</div><div class="glossary-def">Perfect Forward Secrecy — property ensuring that compromise of long-term keys does not compromise past session keys; requires ephemeral DH/ECDH</div><div class="glossary-chapter">Ch. 1, 3</div></div>
+      <div class="glossary-item"><div class="glossary-term">PKI</div><div class="glossary-def">Public Key Infrastructure — framework for managing digital certificates, including CAs, registration authorities, CRLs, and OCSP responders</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">RADIUS</div><div class="glossary-def">Remote Authentication Dial-In User Service — centralized AAA protocol; default port 1812 (auth) and 1813 (accounting)</div><div class="glossary-chapter">Ch. 11</div></div>
+      <div class="glossary-item"><div class="glossary-term">RRSIG</div><div class="glossary-def">Resource Record Signature — DNSSEC record containing the cryptographic signature for a resource record set</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">SAN</div><div class="glossary-def">Subject Alternative Name — X.509v3 extension listing additional hostnames, IPs, and identifiers a certificate is valid for</div><div class="glossary-chapter">Ch. 2</div></div>
+      <div class="glossary-item"><div class="glossary-term">SID (SELinux)</div><div class="glossary-def">Security Identifier — the full SELinux security context label: user:role:type:level</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">slice</div><div class="glossary-def">systemd unit type for organizing cgroups hierarchically (e.g., <code>system.slice</code>, <code>user.slice</code>)</div><div class="glossary-chapter">Ch. 8</div></div>
+      <div class="glossary-item"><div class="glossary-term">Smack</div><div class="glossary-def">Simplified Mandatory Access Control Kernel — lightweight LSM using simple label-based rules; used in embedded and IoT systems</div><div class="glossary-chapter">Ch. 10</div></div>
+      <div class="glossary-item"><div class="glossary-term">SNAT</div><div class="glossary-def">Source NAT — iptables/nftables operation that rewrites the source address of outgoing packets</div><div class="glossary-chapter">Ch. 13</div></div>
+      <div class="glossary-item"><div class="glossary-term">SNI</div><div class="glossary-def">Server Name Indication — TLS extension allowing multiple certificates on one IP by sending the requested hostname in the ClientHello</div><div class="glossary-chapter">Ch. 3</div></div>
+      <div class="glossary-item"><div class="glossary-term">SUID</div><div class="glossary-def">Set User ID — special file permission causing a program to run with the file owner's privileges (e.g., <code>/usr/bin/passwd</code>)</div><div class="glossary-chapter">Ch. 9</div></div>
+      <div class="glossary-item"><div class="glossary-term">TSIG</div><div class="glossary-def">Transaction Signature — DNS authentication mechanism using shared HMAC keys for zone transfers and dynamic updates</div><div class="glossary-chapter">Ch. 5</div></div>
+      <div class="glossary-item"><div class="glossary-term">tun/tap</div><div class="glossary-def">Virtual network interfaces: tun operates at Layer 3 (IP packets, routed VPN), tap at Layer 2 (Ethernet frames, bridged VPN)</div><div class="glossary-chapter">Ch. 14</div></div>
+      <div class="glossary-item"><div class="glossary-term">UEFI</div><div class="glossary-def">Unified Extensible Firmware Interface — modern firmware replacing BIOS; supports Secure Boot for verifying bootloader signatures</div><div class="glossary-chapter">Ch. 6</div></div>
+      <div class="glossary-item"><div class="glossary-term">ulimit</div><div class="glossary-def">Shell built-in and PAM module (<code>pam_limits.so</code>) for setting per-user resource limits; configured in <code>/etc/security/limits.conf</code></div><div class="glossary-chapter">Ch. 8</div></div>
+      <div class="glossary-item"><div class="glossary-term">XSS</div><div class="glossary-def">Cross-Site Scripting — injection of malicious scripts into web pages viewed by other users</div><div class="glossary-chapter">Ch. 15</div></div>
+      <div class="glossary-item"><div class="glossary-term">ZSK</div><div class="glossary-def">Zone Signing Key — DNSSEC key pair that signs all resource records in a zone (except the DNSKEY RRset); rolled more frequently than the KSK</div><div class="glossary-chapter">Ch. 5</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <span class="footer-brand">ArcLight Press</span>
+    <p>© 2026 Eric Tomchik. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>document.addEventListener('DOMContentLoaded', initGlossary);</script>
+</body>
+</html>
