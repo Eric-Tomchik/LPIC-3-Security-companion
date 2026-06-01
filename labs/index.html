@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Labs — LPIC-3 Security Companion</title>
-  <meta name="description" content="20+ hands-on labs with interactive terminal simulators for the LPIC-3 Security 303-300 Study Guide.">
+  <meta name="description" content="23 hands-on labs with interactive terminal simulators for the LPIC-3 Security 303-300 Study Guide.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
 <section class="hero" style="padding:3rem 0 2rem">
   <div class="container">
     <h1>🔬 Interactive Labs</h1>
-    <p class="subtitle">20+ hands-on labs with interactive terminal simulators. Type commands, get feedback, and learn by doing — zero setup required.</p>
+    <p class="subtitle">23 hands-on labs with interactive terminal simulators. Type commands, get feedback, and learn by doing — zero setup required.</p>
     <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.75rem">💡 Type <code>hint</code> in any terminal for the expected command</p>
   </div>
 </section>
@@ -338,6 +338,26 @@
       </div>
     </div>
 
+    <!-- Lab 7.2 — OpenSCAP -->
+    <div class="lab-card">
+      <h3>⚡ Lab 7.2 — OpenSCAP Compliance Scanning</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 7</span>
+        <span class="tag tag-purple">Obj 332.2</span>
+      </div>
+      <div class="lab-objective">Install OpenSCAP and the SCAP Security Guide, list available security profiles, and run a CIS benchmark compliance scan with HTML report output.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-7-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-7-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 7.2 — OpenSCAP</span>
+          </div>
+          <div class="terminal-body" id="term-7-2"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ PART III: Access Control ═══ -->
     <div class="part-header">
       <div class="part-label">Part III — Access Control</div>
@@ -407,6 +427,47 @@
             <span class="terminal-title">Lab 11.1 — tcpdump Analysis</span>
           </div>
           <div class="terminal-body" id="term-11-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 12.1 — NEW: Snort IDS -->
+    <div class="lab-card">
+      <h3>⚡ Lab 12.1 — Snort IDS Configuration &amp; Rule Writing</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 12</span>
+        <span class="tag tag-purple">Obj 334.2</span>
+        <span class="tag tag-orange">Exam Focus</span>
+      </div>
+      <div class="lab-objective">Configure Snort network variables, write custom IDS rules (ICMP alert, SSH brute-force, SQL injection), test in NIDS mode, and manage rules with PulledPork.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-12-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-12-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 12.1 — Snort IDS</span>
+          </div>
+          <div class="terminal-body" id="term-12-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 12.2 — NEW: OpenVAS/GVM -->
+    <div class="lab-card">
+      <h3>⚡ Lab 12.2 — OpenVAS / GVM Vulnerability Scanning</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 12</span>
+        <span class="tag tag-purple">Obj 334.2</span>
+      </div>
+      <div class="lab-objective">Install and initialize GVM/OpenVAS, sync vulnerability feeds, verify scanner status, and launch a vulnerability scan via the CLI.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-12-2')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-12-2">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 12.2 — OpenVAS / GVM</span>
+          </div>
+          <div class="terminal-body" id="term-12-2"></div>
         </div>
       </div>
     </div>
@@ -610,6 +671,33 @@ document.addEventListener('DOMContentLoaded', () => {
     {intro:"# Lab 11.1 — Network Traffic Analysis with tcpdump",cmd:"tcpdump -i eth0 -c 5 port 53",accept:["tcpdump -i eth0 -c 5 port 53","tcpdump -i eth0 port 53 -c 5"],hint:"tcpdump -i eth0 -c 5 port 53",output:["tcpdump: verbose output suppressed","listening on eth0, link-type EN10MB","12:00:01 IP lab.local.43210 > 8.8.8.8.53: 12345+ A? example.com. (30)","12:00:01 IP 8.8.8.8.53 > lab.local.43210: 12345 1/0/0 A 93.184.216.34","12:00:02 IP lab.local.55432 > 8.8.8.8.53: 12346+ AAAA? example.com. (30)","12:00:02 IP 8.8.8.8.53 > lab.local.55432: 12346 1/0/0 AAAA 2606:2800:220:1:...","12:00:03 IP lab.local.61234 > 8.8.8.8.53: 12347+ A? google.com. (28)","<span class='success'>5 packets captured</span>"]},
     {cmd:"tcpdump -i eth0 -w capture.pcap",accept:["tcpdump -i eth0 -w capture.pcap"],hint:"tcpdump -i eth0 -w capture.pcap",output:["tcpdump: listening on eth0, link-type EN10MB, snapshot length 262144 bytes","^C","<span class='success'>247 packets captured, 0 packets dropped</span>"]},
     {cmd:"tcpdump -r capture.pcap -n host 192.168.1.100",accept:["tcpdump -r capture.pcap -n host 192.168.1.100","tcpdump -r capture.pcap"],hint:"tcpdump -r capture.pcap -n host 192.168.1.100",output:["reading from file capture.pcap","12:00:15 IP 192.168.1.100.22 > 192.168.1.1.54321: Flags [P.], seq 1:37","12:00:15 IP 192.168.1.1.54321 > 192.168.1.100.22: Flags [.], ack 37"]},
+  ]);
+
+  // Lab 12.1: Snort IDS
+  initTerminal('term-12-1', [
+    {intro:"# Lab 12.1 — Snort IDS Configuration & Rule Writing",cmd:"snort -V",accept:["snort -V","snort --version"],hint:"snort -V — check installed version",output:["   ,,_     -*> Snort! <*-","  o\"  )~   Version 3.1.76.0","   ''''    By Martin Roesch & The Snort Team","           https://www.snort.org","<span class='success'>Snort ready.</span>"]},
+    {cmd:"cat /etc/snort/snort.conf | grep HOME_NET",accept:["cat /etc/snort/snort.conf | grep HOME_NET","grep HOME_NET /etc/snort/snort.conf"],hint:"grep HOME_NET /etc/snort/snort.conf",output:["var HOME_NET 10.0.0.0/8","var EXTERNAL_NET !$HOME_NET"]},
+    {cmd:"snort -T -c /etc/snort/snort.conf",accept:["snort -T -c /etc/snort/snort.conf","sudo snort -T -c /etc/snort/snort.conf"],hint:"snort -T -c /etc/snort/snort.conf — test configuration",output:["Running in Test mode","        --== Initializing Snort ==--","Initializing Output Plugins!","Verifying Preprocessor Configurations!","        --== Initialization Complete ==--","   ,,_     -*> Snort! <*-","  o\"  )~   Version 3.1.76.0","<span class='success'>Snort successfully validated the configuration!</span>"]},
+    {cmd:"echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules",accept:["echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules"],hint:"echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules",output:["<span class='success'>Rule appended to local.rules</span>"]},
+    {cmd:"echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)' >> /etc/snort/rules/local.rules",accept:["echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)' >> /etc/snort/rules/local.rules"],hint:"Write an SSH brute-force rule with threshold — action proto src port -> dst port (options)",output:["<span class='success'>SSH brute-force rule added</span>"]},
+    {cmd:"snort -A console -q -c /etc/snort/snort.conf -i eth0",accept:["snort -A console -q -c /etc/snort/snort.conf -i eth0","sudo snort -A console -q -c /etc/snort/snort.conf -i eth0"],hint:"snort -A console -q -c /etc/snort/snort.conf -i eth0 — run in NIDS mode",output:["06/01-12:00:01.123456 [**] [1:1000001:1] ICMP Traffic Detected [**]","[Priority: 0] {ICMP} 203.0.113.50 -> 10.0.0.5","06/01-12:00:02.234567 [**] [1:1000001:1] ICMP Traffic Detected [**]","[Priority: 0] {ICMP} 203.0.113.50 -> 10.0.0.5","<span class='success'>^C — Snort NIDS mode active, alerts streaming.</span>"]},
+    {cmd:"cat /etc/snort/rules/local.rules",accept:["cat /etc/snort/rules/local.rules"],hint:"cat /etc/snort/rules/local.rules — verify all custom rules",output:["alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)","alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)","<span class='success'>2 custom rules active in local.rules</span>"]},
+  ]);
+
+  // Lab 12.2: OpenVAS/GVM
+  initTerminal('term-12-2', [
+    {intro:"# Lab 12.2 — OpenVAS / GVM Vulnerability Scanning",cmd:"sudo apt install gvm",accept:["sudo apt install gvm","apt install gvm"],hint:"sudo apt install gvm",output:["Reading package lists... Done","Setting up gvm (22.4.1) ...","Setting up openvas-scanner (22.7.9) ...","Setting up greenbone-security-assistant (22.9.0) ...","<span class='success'>GVM/OpenVAS installed successfully.</span>"]},
+    {cmd:"sudo gvm-setup",accept:["sudo gvm-setup","gvm-setup"],hint:"sudo gvm-setup — initialize GVM database and create admin user",output:["[*] Creating GVM database...","[*] Creating admin user...","[*] Importing NVT feed...","[*] Generating certificates...","[+] Admin user created:","    Username: admin","    Password: 2f8a4b6c-d9e1-4a3b-8c7f-1234567890ab","<span class='success'>[+] GVM setup complete.</span>"]},
+    {cmd:"sudo greenbone-nvt-sync",accept:["sudo greenbone-nvt-sync","greenbone-nvt-sync"],hint:"sudo greenbone-nvt-sync — download latest vulnerability tests",output:["[i] Syncing NVTs from Greenbone feed server...","[i] Downloading NVTs... 89,247 NVTs updated","[i] Updating VT info in database...","<span class='success'>[+] NVT feed sync complete — 89,247 vulnerability tests loaded.</span>"]},
+    {cmd:"sudo gvm-start",accept:["sudo gvm-start","gvm-start"],hint:"sudo gvm-start — start all GVM services",output:["[*] Starting gvmd...","[*] Starting ospd-openvas...","[*] Starting gsad (web interface)...","[+] GSA listening on https://localhost:9392","<span class='success'>[+] GVM services started.</span>"]},
+    {cmd:"gvm-cli socket --gmp-username admin --gmp-password pass --xml \"<get_version/>\"",accept:["gvm-cli socket --gmp-username admin --gmp-password pass --xml \"<get_version/>\""],hint:"gvm-cli socket --gmp-username admin --gmp-password pass --xml \"<get_version/>\"",output:["<get_version_response status=\"200\">","  <version>22.4</version>","</get_version_response>","<span class='success'>GVM Manager responding — version 22.4</span>"]},
+  ]);
+
+  // Lab 7.2: OpenSCAP
+  initTerminal('term-7-2', [
+    {intro:"# Lab 7.2 — OpenSCAP Compliance Scanning",cmd:"sudo dnf install openscap-scanner scap-security-guide",accept:["sudo dnf install openscap-scanner scap-security-guide","dnf install openscap-scanner scap-security-guide","sudo apt install libopenscap8 ssg-debian"],hint:"sudo dnf install openscap-scanner scap-security-guide",output:["Dependencies resolved.","Installing:","  openscap-scanner  x86_64  1.3.9-1.el9","  scap-security-guide noarch  0.1.72-1.el9","<span class='success'>Complete! OpenSCAP scanner and SCAP Security Guide installed.</span>"]},
+    {cmd:"oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",accept:["oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml"],hint:"oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml — list profiles",output:["Document type: Source Data Stream","Imported: 2024-06-15","Stream: scap_org.open-scap_datastream","Profiles:","  Title: CIS Red Hat Enterprise Linux 9 Benchmark Level 1 - Server","    Id: xccdf_org.ssgproject.content_profile_cis","  Title: DISA STIG for Red Hat Enterprise Linux 9","    Id: xccdf_org.ssgproject.content_profile_stig","  Title: PCI-DSS v4.0 Control Baseline","    Id: xccdf_org.ssgproject.content_profile_pci-dss","<span class='success'>3 security profiles available.</span>"]},
+    {cmd:"sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",accept:["sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml","oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml"],hint:"sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",output:["Title   Ensure permissions on /etc/passwd are configured","Rule    xccdf_org.ssgproject.content_rule_file_permissions_etc_passwd","Result  <span class='success'>pass</span>","","Title   Ensure SSH root login is disabled","Rule    xccdf_org.ssgproject.content_rule_sshd_disable_root_login","Result  <span class='error'>fail</span>","","Title   Ensure system-wide crypto policy is set","Rule    xccdf_org.ssgproject.content_rule_configure_crypto_policy","Result  <span class='success'>pass</span>","","--- Results Summary ---","Pass:  87","Fail:  14","Not Applicable: 31","<span class='success'>HTML report saved: /tmp/compliance-report.html</span>"]},
   ]);
 
   // Lab 14.1: WireGuard VPN
