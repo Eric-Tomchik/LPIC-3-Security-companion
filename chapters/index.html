@@ -9,6 +9,179 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Chapter card expandable styles */
+    .chapter-card {
+      cursor: pointer;
+      transition: all .3s ease;
+      position: relative;
+    }
+    .chapter-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,210,255,.12);
+    }
+    .chapter-card.expanded {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(0,210,255,.15);
+    }
+    .chapter-toggle {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s ease;
+      pointer-events: none;
+    }
+    .chapter-card.expanded .chapter-toggle {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      transform: rotate(180deg);
+    }
+    .chapter-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, opacity .3s ease, margin .3s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+    .chapter-card.expanded .chapter-detail {
+      max-height: 800px;
+      opacity: 1;
+      margin-top: 1rem;
+    }
+    .detail-section {
+      padding: .75rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .detail-section:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+    .detail-label {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+    .detail-text {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .detail-sections-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .detail-sections-list li {
+      font-size: .82rem;
+      color: var(--text-muted);
+      padding: .2rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .detail-sections-list li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .detail-commands {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+    }
+    .detail-commands code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      color: var(--text);
+    }
+    .detail-resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .25rem;
+    }
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      padding: .35rem .7rem;
+      border-radius: 6px;
+      background: rgba(0,210,255,.08);
+      border: 1px solid rgba(0,210,255,.2);
+      transition: all .2s ease;
+    }
+    .resource-link:hover {
+      background: rgba(0,210,255,.18);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .resource-link.lab { color: var(--green); background: rgba(0,255,136,.08); border-color: rgba(0,255,136,.2); }
+    .resource-link.lab:hover { background: rgba(0,255,136,.18); border-color: var(--green); }
+    .resource-link.ref { color: var(--purple); background: rgba(168,85,247,.08); border-color: rgba(168,85,247,.2); }
+    .resource-link.ref:hover { background: rgba(168,85,247,.18); border-color: var(--purple); }
+    .resource-link.flash { color: var(--orange); background: rgba(255,165,0,.08); border-color: rgba(255,165,0,.2); }
+    .resource-link.flash:hover { background: rgba(255,165,0,.18); border-color: var(--orange); }
+    .resource-link.quiz-link { color: var(--cyan); background: rgba(0,210,255,.08); border-color: rgba(0,210,255,.2); }
+    .resource-link.quiz-link:hover { background: rgba(0,210,255,.18); border-color: var(--cyan); }
+    .resource-link.gloss { color: #f472b6; background: rgba(244,114,182,.08); border-color: rgba(244,114,182,.2); }
+    .resource-link.gloss:hover { background: rgba(244,114,182,.18); border-color: #f472b6; }
+
+    .weight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .25rem .6rem;
+      border-radius: 20px;
+      margin-top: .4rem;
+    }
+    .weight-badge.critical {
+      background: rgba(239,68,68,.15);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,.3);
+    }
+    .weight-badge.high {
+      background: rgba(255,165,0,.12);
+      color: var(--orange);
+      border: 1px solid rgba(255,165,0,.25);
+    }
+    .weight-badge.moderate {
+      background: rgba(0,210,255,.1);
+      color: var(--cyan);
+      border: 1px solid rgba(0,210,255,.2);
+    }
+    .chapter-summary {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: .5rem;
+    }
+  </style>
 </head>
 <body>
 
@@ -31,199 +204,702 @@
 
 <section class="hero" style="padding:3rem 0 2rem">
   <div class="container">
-    <h1>📚 Chapter Resources</h1>
-    <p class="subtitle">All 16 chapters across 5 exam topics. Each chapter includes learning objectives, key concepts, and section breakdowns.</p>
+    <div style="margin-bottom:1rem"><span class="tag tag-cyan" style="font-size:.85rem;padding:.4rem 1rem">16 CHAPTERS · 5 PARTS</span></div>
+    <h1>Chapter Resources</h1>
+    <p class="subtitle">Learning objectives, key topics, and exam objective mappings for all 16 chapters. Click any chapter to expand detailed content and resource links.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
 
-    <!-- Part I -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- Part I — Cryptography -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Part I — Exam Topic 331</div>
       <div class="part-title">Cryptography</div>
       <div class="part-meta">Weight 17 · ~28% of Exam · 5 Chapters · Objectives 331.1–331.4</div>
     </div>
     <div class="grid-2" style="margin-bottom:2rem">
-      <div class="chapter-card">
+
+      <!-- Chapter 1 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 1</div>
         <div class="chapter-title">Cryptographic Foundations</div>
-        <div class="chapter-sections">1.1 Symmetric vs. Asymmetric Cryptography · 1.2 Hash Functions &amp; Message Digests · 1.3 Digital Signatures · 1.4 Key Exchange Mechanisms · 1.5 Random Number Generation</div>
+        <p class="chapter-summary">Establishes the cryptographic concepts that underpin every topic in Part I — symmetric &amp; asymmetric algorithms, hash functions, digital signatures, and key exchange.</p>
         <div class="chapter-tags">
-          <span class="tag tag-cyan">AES</span><span class="tag tag-cyan">RSA</span><span class="tag tag-cyan">Ed25519</span><span class="tag tag-cyan">SHA-256</span><span class="tag tag-green">Lab 1.1</span>
+          <span class="tag tag-cyan">AES</span><span class="tag tag-cyan">RSA</span><span class="tag tag-cyan">Ed25519</span><span class="tag tag-cyan">SHA-256</span><span class="tag tag-cyan">ChaCha20</span>
+        </div>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>1.1 Symmetric vs. Asymmetric Cryptography</li>
+              <li>1.2 Hash Functions and Message Digests</li>
+              <li>1.3 Digital Signatures and Non-Repudiation</li>
+              <li>1.4 Key Exchange Mechanisms</li>
+              <li>1.5 Random Number Generation on Linux</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>openssl enc</code><code>openssl dgst</code><code>openssl genrsa</code><code>openssl genpkey</code><code>openssl rsautl</code><code>openssl pkeyutl</code><code>ssh-keygen</code><code>/dev/urandom</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-1-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 1.1 — Symmetric &amp; Asymmetric Encryption</a>
+              <a href="../reference/index.html#crypto" class="resource-link ref" onclick="event.stopPropagation()">📋 Crypto &amp; Certs Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Cryptography</a>
+              <a href="../glossary/index.html" class="resource-link gloss" onclick="event.stopPropagation()">🔍 Glossary Terms</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 2 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 2</div>
         <div class="chapter-title">X.509 Certificates and Public Key Infrastructures</div>
-        <div class="chapter-sections">2.1 X.509 Certificate Architecture · 2.2 PKI Concepts · 2.3 Generating Keys with OpenSSL · 2.4 Building a Certificate Authority · 2.5 Certificate Lifecycle · 2.6 Let's Encrypt &amp; ACME · 2.7 CFSSL · 2.8 Format Conversions · 2.9 Chain Verification</div>
+        <p class="chapter-summary">One of the six highest-weighted objectives. Covers X.509 certificate structure, lifecycle, trust chains, PKI architecture, and operating a certificate authority.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 331.1 (Wt 5)</span><span class="tag tag-cyan">OpenSSL</span><span class="tag tag-cyan">certbot</span><span class="tag tag-green">Lab 2.1</span>
+          <span class="tag tag-purple">Obj 331.1 (Wt 5)</span><span class="tag tag-cyan">OpenSSL</span><span class="tag tag-cyan">certbot</span><span class="tag tag-cyan">CFSSL</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>2.1 X.509 Certificate Architecture</li>
+              <li>2.2 Public Key Infrastructure Concepts</li>
+              <li>2.3 Generating and Managing Keys with OpenSSL</li>
+              <li>2.4 Building and Operating a Certificate Authority</li>
+              <li>2.5 Certificate Lifecycle Management</li>
+              <li>2.6 Let's Encrypt, ACME, and Certbot</li>
+              <li>2.7 CFSSL — CloudFlare's PKI Toolkit</li>
+              <li>2.8 Certificate Format Conversions</li>
+              <li>2.9 Certificate Chain Verification and Debugging</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>openssl req</code><code>openssl x509</code><code>openssl ca</code><code>openssl verify</code><code>openssl s_client</code><code>openssl crl</code><code>openssl pkcs12</code><code>certbot</code><code>cfssl</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-2-1a" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 2.1a — Inspecting X.509 Certificates</a>
+              <a href="../labs/index.html#lab-2-1b" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 2.1b — Building a Two-Tier PKI</a>
+              <a href="../reference/index.html#crypto" class="resource-link ref" onclick="event.stopPropagation()">📋 Crypto &amp; Certs Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Certificates &amp; PKI</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 3 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 3</div>
         <div class="chapter-title">X.509 Certificates for Encryption, Signing and Authentication</div>
-        <div class="chapter-sections">3.1 SSL/TLS Protocol Deep Dive · 3.2 Apache HTTPD with mod_ssl · 3.3 Advanced mod_ssl: Client Certs &amp; OCSP Stapling · 3.4 OpenSSL for TLS Testing · 3.5 Nginx SSL/TLS</div>
+        <p class="chapter-summary">Configure SSL/TLS for web servers, understand the TLS handshake, use OpenSSL for testing and debugging, and deploy client certificate authentication.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 331.2 (Wt 4)</span><span class="tag tag-cyan">TLS 1.3</span><span class="tag tag-cyan">mod_ssl</span><span class="tag tag-green">Lab 3.1</span>
+          <span class="tag tag-purple">Obj 331.2 (Wt 4)</span><span class="tag tag-cyan">TLS 1.3</span><span class="tag tag-cyan">mod_ssl</span><span class="tag tag-cyan">Nginx</span>
+        </div>
+        <span class="weight-badge high">⚡ HIGH — Weight 4</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>3.1 SSL/TLS Protocol Deep Dive</li>
+              <li>3.2 Apache HTTPD with mod_ssl — HTTPS Configuration</li>
+              <li>3.3 Advanced mod_ssl: Client Certificates and OCSP Stapling</li>
+              <li>3.4 OpenSSL for SSL/TLS Testing and Debugging</li>
+              <li>3.5 Nginx SSL/TLS Configuration</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>openssl s_client</code><code>openssl s_server</code><code>SSLCertificateFile</code><code>SSLEngine</code><code>ssl_certificate</code><code>a2enmod ssl</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-3-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 3.1 — End-to-End HTTPS Deployment</a>
+              <a href="../reference/index.html#crypto" class="resource-link ref" onclick="event.stopPropagation()">📋 Crypto &amp; Certs Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 4 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 4</div>
         <div class="chapter-title">Encrypted File Systems</div>
-        <div class="chapter-sections">4.1 Encryption Concepts · 4.2 dm-crypt with LUKS1 · 4.3 eCryptfs &amp; PAM Integration · 4.4 LUKS2, Clevis &amp; NBDE · 4.5 LUKS Key Management · 4.6 VeraCrypt Awareness</div>
+        <p class="chapter-summary">Block-level and file-level encryption on Linux: dm-crypt with LUKS for full-disk encryption, eCryptfs for per-directory encryption, LUKS2 features, and NBDE with Clevis and Tang.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 331.3 (Wt 3)</span><span class="tag tag-cyan">LUKS</span><span class="tag tag-cyan">cryptsetup</span><span class="tag tag-green">Lab 4.1</span>
+          <span class="tag tag-purple">Obj 331.3 (Wt 3)</span><span class="tag tag-cyan">LUKS</span><span class="tag tag-cyan">cryptsetup</span><span class="tag tag-cyan">eCryptfs</span>
+        </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 3</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>4.1 Block Device and File System Encryption Concepts</li>
+              <li>4.2 dm-crypt with LUKS1</li>
+              <li>4.3 eCryptfs and PAM Integration</li>
+              <li>4.4 Plain dm-crypt, LUKS2, Clevis, and NBDE</li>
+              <li>4.5 LUKS Key Management Deep Dive</li>
+              <li>4.6 VeraCrypt / TrueCrypt Awareness</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>cryptsetup luksFormat</code><code>cryptsetup luksOpen</code><code>cryptsetup luksAddKey</code><code>cryptsetup luksDump</code><code>/etc/crypttab</code><code>mount.ecryptfs</code><code>clevis</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-4-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 4.1 — LUKS Multi-Slot Key Management</a>
+              <a href="../reference/index.html#luks" class="resource-link ref" onclick="event.stopPropagation()">📋 LUKS Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Encryption</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 5 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 5</div>
         <div class="chapter-title">DNS and Cryptography</div>
-        <div class="chapter-sections">5.1 DNS Security Fundamentals · 5.2 DNSSEC Concepts · 5.3 BIND with DNSSEC · 5.4 Key Rollover · 5.5 Validating Resolver · 5.6 CAA, DANE &amp; TSIG · 5.7 DoT, DoH &amp; mDNS</div>
+        <p class="chapter-summary">One of the six highest-weighted objectives. Configure BIND as an authoritative server with zone signing and as a validating resolver, manage DNSSEC key rollovers, DANE, TSIG, DoT, and DoH.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 331.4 (Wt 5)</span><span class="tag tag-cyan">DNSSEC</span><span class="tag tag-cyan">BIND</span><span class="tag tag-green">Labs 5.1–5.3</span>
+          <span class="tag tag-purple">Obj 331.4 (Wt 5)</span><span class="tag tag-cyan">DNSSEC</span><span class="tag tag-cyan">BIND</span><span class="tag tag-cyan">DANE</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>5.1 DNS Security Fundamentals</li>
+              <li>5.2 DNSSEC Concepts and Architecture</li>
+              <li>5.3 BIND as an Authoritative Server with DNSSEC</li>
+              <li>5.4 DNSSEC Key Rollover</li>
+              <li>5.5 BIND as a Validating Recursive Resolver</li>
+              <li>5.6 CAA, DANE, and TSIG</li>
+              <li>5.7 DNS over TLS, DNS over HTTPS, and Multicast DNS</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>dnssec-keygen</code><code>dnssec-signzone</code><code>dnssec-settime</code><code>rndc</code><code>named-checkzone</code><code>dig +dnssec</code><code>delv</code><code>named.conf</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-5-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 5.1 — DNSSEC Zone Signing</a>
+              <a href="../labs/index.html#lab-5-2" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 5.2 — DNSSEC Validation</a>
+              <a href="../labs/index.html#lab-5-3" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 5.3 — DNSSEC Key Rollover</a>
+              <a href="../reference/index.html#dnssec" class="resource-link ref" onclick="event.stopPropagation()">📋 DNSSEC Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — DNS &amp; DNSSEC</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Part II -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- Part II — Host Security -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Part II — Exam Topic 332</div>
       <div class="part-title">Host Security</div>
       <div class="part-meta">Weight 13 · ~22% of Exam · 3 Chapters · Objectives 332.1–332.3</div>
     </div>
     <div class="grid-2" style="margin-bottom:2rem">
-      <div class="chapter-card">
+
+      <!-- Chapter 6 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 6</div>
         <div class="chapter-title">Host Hardening</div>
-        <div class="chapter-sections">6.1 BIOS/UEFI &amp; Boot Security · 6.2 Disabling Unused Services · 6.3 Linux Capabilities · 6.4 ASLR, DEP &amp; Exec-Shield · 6.5 USBGuard · 6.6 SSH Certificate Authority · 6.7 Chroot · 6.8 systemd Security · 6.9 Spectre/Meltdown · 6.10 polkit &amp; Containers</div>
+        <p class="chapter-summary">A broad weight-5 objective: BIOS/UEFI security, disabling unnecessary services, Linux capabilities, memory protection, USB device control, SSH certificates, chroot jails, and systemd sandboxing.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 332.1 (Wt 5)</span><span class="tag tag-cyan">systemd</span><span class="tag tag-cyan">capabilities</span><span class="tag tag-green">Labs 6.1–6.2</span>
+          <span class="tag tag-purple">Obj 332.1 (Wt 5)</span><span class="tag tag-cyan">systemd</span><span class="tag tag-cyan">capabilities</span><span class="tag tag-cyan">USBGuard</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>6.1 BIOS/UEFI and Boot Loader Security</li>
+              <li>6.2 Disabling Unused Software and Services</li>
+              <li>6.3 Linux Capabilities</li>
+              <li>6.4 Memory Protection: ASLR, DEP, and Exec-Shield</li>
+              <li>6.5 USB Device Security with USBGuard</li>
+              <li>6.6 SSH Certificate Authority</li>
+              <li>6.7 Chroot Environments</li>
+              <li>6.8 systemd Security Directives</li>
+              <li>6.9 Spectre and Meltdown Mitigations</li>
+              <li>6.10 polkit, Virtualization, and Container Security</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>getcap</code><code>setcap</code><code>capsh</code><code>usbguard</code><code>ssh-keygen -s</code><code>chroot</code><code>systemd-analyze security</code><code>ProtectSystem</code><code>PrivateTmp</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-6-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 6.1 — Linux Capabilities</a>
+              <a href="../labs/index.html#lab-6-2" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 6.2 — systemd Sandboxing</a>
+              <a href="../reference/index.html#host-security" class="resource-link ref" onclick="event.stopPropagation()">📋 Host Security Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 7 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 7</div>
         <div class="chapter-title">Host Intrusion Detection</div>
-        <div class="chapter-sections">7.1 Linux Audit System · 7.2 chkrootkit &amp; rkhunter · 7.3 Linux Malware Detect · 7.4 Automating Scans · 7.5 Package Integrity · 7.6 AIDE · 7.7 OpenSCAP</div>
+        <p class="chapter-summary">Another weight-5 objective. Use the Linux audit system, detect rootkits and malware, verify package integrity, and configure AIDE for file integrity monitoring.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 332.2 (Wt 5)</span><span class="tag tag-cyan">auditd</span><span class="tag tag-cyan">AIDE</span><span class="tag tag-green">Labs 7.0–7.1</span>
+          <span class="tag tag-purple">Obj 332.2 (Wt 5)</span><span class="tag tag-cyan">auditd</span><span class="tag tag-cyan">AIDE</span><span class="tag tag-cyan">rkhunter</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>7.1 The Linux Audit System</li>
+              <li>7.2 Rootkit Detection with chkrootkit and rkhunter</li>
+              <li>7.3 Linux Malware Detect (maldet)</li>
+              <li>7.4 Automating Host Scans</li>
+              <li>7.5 Package Integrity Verification</li>
+              <li>7.6 AIDE — Advanced Intrusion Detection Environment</li>
+              <li>7.7 OpenSCAP Awareness</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>auditctl</code><code>ausearch</code><code>aureport</code><code>auditd.conf</code><code>chkrootkit</code><code>rkhunter</code><code>maldet</code><code>aide --init</code><code>aide --check</code><code>rpm -V</code><code>debsums</code><code>oscap</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-7-0" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 7.0 — Audit Rules</a>
+              <a href="../labs/index.html#lab-7-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 7.1 — AIDE File Integrity</a>
+              <a href="../reference/index.html#host-security" class="resource-link ref" onclick="event.stopPropagation()">📋 Host Security Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 8 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 8</div>
         <div class="chapter-title">Resource Control</div>
-        <div class="chapter-sections">8.1 Resource Control Concepts · 8.2 Control Groups (cgroups) · 8.3 Managing cgroups via systemd · 8.4 Per-User Limits with ulimit</div>
+        <p class="chapter-summary">Prevent processes from consuming excessive system resources. Covers cgroups (v1 and v2), systemd resource management, and ulimit — key defenses against fork bombs and resource exhaustion.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 332.3 (Wt 3)</span><span class="tag tag-cyan">cgroups</span><span class="tag tag-cyan">ulimit</span><span class="tag tag-green">Labs 8.1–8.2</span>
+          <span class="tag tag-purple">Obj 332.3 (Wt 3)</span><span class="tag tag-cyan">cgroups</span><span class="tag tag-cyan">ulimit</span><span class="tag tag-cyan">systemd</span>
+        </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 3</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>8.1 Resource Control Concepts</li>
+              <li>8.2 Control Groups (cgroups)</li>
+              <li>8.3 Managing cgroups via systemd</li>
+              <li>8.4 Per-User Resource Limits with ulimit</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>cgcreate</code><code>cgset</code><code>cgexec</code><code>systemctl set-property</code><code>ulimit</code><code>/etc/security/limits.conf</code><code>MemoryMax</code><code>CPUQuota</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-8-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 8.1 — cgroups Resource Limits</a>
+              <a href="../labs/index.html#lab-8-2" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 8.2 — ulimit Configuration</a>
+              <a href="../reference/index.html#host-security" class="resource-link ref" onclick="event.stopPropagation()">📋 Host Security Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Part III -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- Part III — Access Control -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Part III — Exam Topic 333</div>
       <div class="part-title">Access Control</div>
       <div class="part-meta">Weight 8 · ~13% of Exam · 2 Chapters · Objectives 333.1–333.2</div>
     </div>
     <div class="grid-2" style="margin-bottom:2rem">
-      <div class="chapter-card">
+
+      <!-- Chapter 9 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 9</div>
         <div class="chapter-title">Discretionary Access Control</div>
-        <div class="chapter-sections">9.1 File Ownership &amp; Permissions · 9.2 Special Permission Bits · 9.3 Access Control Lists (ACLs) · 9.4 Extended Attributes</div>
+        <p class="chapter-summary">The traditional Unix permission model: standard permissions, special bits (SUID/SGID/sticky), POSIX ACLs, and extended attributes at LPIC-3 depth.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 333.1 (Wt 3)</span><span class="tag tag-cyan">setfacl</span><span class="tag tag-cyan">chattr</span>
+          <span class="tag tag-purple">Obj 333.1 (Wt 3)</span><span class="tag tag-cyan">ACLs</span><span class="tag tag-cyan">setfacl</span><span class="tag tag-cyan">chattr</span>
+        </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 3</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>9.1 File Ownership and Permissions</li>
+              <li>9.2 Special Permission Bits</li>
+              <li>9.3 Access Control Lists (ACLs)</li>
+              <li>9.4 Extended Attributes</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>chmod</code><code>chown</code><code>setfacl</code><code>getfacl</code><code>chattr</code><code>lsattr</code><code>umask</code><code>find -perm</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Access Control</a>
+              <a href="../glossary/index.html" class="resource-link gloss" onclick="event.stopPropagation()">🔍 Glossary Terms</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 10 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 10</div>
         <div class="chapter-title">Mandatory Access Control</div>
-        <div class="chapter-sections">10.1 MAC vs. DAC · 10.2 SELinux Architecture · 10.3 SELinux Config · 10.4 File Contexts · 10.5 Booleans &amp; Ports · 10.6 Troubleshooting · 10.7 seinfo &amp; sesearch · 10.8 audit2allow · 10.9 AppArmor &amp; Smack</div>
+        <p class="chapter-summary">Weight-5 — one of the most heavily tested areas. SELinux administration (modes, policies, contexts, booleans, port labels, troubleshooting) plus AppArmor and Smack awareness.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 333.2 (Wt 5)</span><span class="tag tag-cyan">SELinux</span><span class="tag tag-cyan">AppArmor</span><span class="tag tag-green">Labs 10.1–10.2</span>
+          <span class="tag tag-purple">Obj 333.2 (Wt 5)</span><span class="tag tag-cyan">SELinux</span><span class="tag tag-cyan">AppArmor</span><span class="tag tag-cyan">Smack</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>10.1 MAC vs. DAC Concepts</li>
+              <li>10.2 SELinux Architecture</li>
+              <li>10.3 SELinux Configuration and Management</li>
+              <li>10.4 SELinux File Contexts</li>
+              <li>10.5 SELinux Booleans and Port Labels</li>
+              <li>10.6 SELinux Troubleshooting</li>
+              <li>10.7 SELinux Policy Queries with seinfo and sesearch</li>
+              <li>10.8 Complete audit2allow Workflow</li>
+              <li>10.9 AppArmor and Smack Awareness</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>getenforce</code><code>setenforce</code><code>sestatus</code><code>semanage</code><code>restorecon</code><code>chcon</code><code>setsebool</code><code>getsebool</code><code>audit2allow</code><code>seinfo</code><code>sesearch</code><code>aa-status</code><code>aa-enforce</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-10-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 10.1 — SELinux File Contexts</a>
+              <a href="../labs/index.html#lab-10-2" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 10.2 — SELinux Troubleshooting</a>
+              <a href="../reference/index.html#selinux" class="resource-link ref" onclick="event.stopPropagation()">📋 SELinux &amp; AppArmor Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — SELinux</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Part IV -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- Part IV — Network Security -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Part IV — Exam Topic 334</div>
       <div class="part-title">Network Security</div>
       <div class="part-meta">Weight 17 · ~28% of Exam · 4 Chapters · Objectives 334.1–334.4</div>
     </div>
     <div class="grid-2" style="margin-bottom:2rem">
-      <div class="chapter-card">
+
+      <!-- Chapter 11 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 11</div>
         <div class="chapter-title">Network Hardening</div>
-        <div class="chapter-sections">11.1 FreeRADIUS Configuration · 11.2 Wireshark &amp; tcpdump · 11.3 Kismet Wireless Analysis · 11.4 Rogue Services &amp; ndpmon</div>
+        <p class="chapter-summary">FreeRADIUS configuration, network traffic analysis with Wireshark and tcpdump, wireless analysis with Kismet, and detection of rogue network services.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 334.1 (Wt 4)</span><span class="tag tag-cyan">FreeRADIUS</span><span class="tag tag-cyan">tcpdump</span><span class="tag tag-green">Lab 11.1</span>
+          <span class="tag tag-purple">Obj 334.1 (Wt 4)</span><span class="tag tag-cyan">FreeRADIUS</span><span class="tag tag-cyan">tcpdump</span><span class="tag tag-cyan">Kismet</span>
+        </div>
+        <span class="weight-badge high">⚡ HIGH — Weight 4</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>11.1 FreeRADIUS Configuration</li>
+              <li>11.2 Network Traffic Analysis with Wireshark and tcpdump</li>
+              <li>11.3 Wireless Network Analysis with Kismet</li>
+              <li>11.4 Rogue Network Services and ndpmon</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>radiusd</code><code>radtest</code><code>tcpdump</code><code>wireshark</code><code>tshark</code><code>kismet</code><code>ndpmon</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-11-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 11.1 — tcpdump &amp; Packet Capture</a>
+              <a href="../reference/index.html#firewall" class="resource-link ref" onclick="event.stopPropagation()">📋 Firewall &amp; Networking Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 12 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 12</div>
         <div class="chapter-title">Network Intrusion Detection</div>
-        <div class="chapter-sections">12.1 Bandwidth Monitoring with ntop · 12.2 Snort IDS Configuration · 12.3 OpenVAS Vulnerability Scanning · 12.4 Nagios Awareness</div>
+        <p class="chapter-summary">Network-level intrusion detection and vulnerability scanning: bandwidth monitoring with ntop, IDS/IPS configuration with Snort, and vulnerability scanning with OpenVAS.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 334.2 (Wt 3)</span><span class="tag tag-cyan">Snort</span><span class="tag tag-cyan">OpenVAS</span>
+          <span class="tag tag-purple">Obj 334.2 (Wt 3)</span><span class="tag tag-cyan">Snort</span><span class="tag tag-cyan">OpenVAS</span><span class="tag tag-cyan">ntop</span>
+        </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 3</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>12.1 Bandwidth Monitoring with ntop</li>
+              <li>12.2 Snort IDS Configuration and Rule Management</li>
+              <li>12.3 OpenVAS Vulnerability Scanning</li>
+              <li>12.4 Nagios and Network Monitoring Awareness</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>ntopng</code><code>snort</code><code>snort.conf</code><code>openvas-setup</code><code>gvm-start</code><code>nagios</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../reference/index.html#scanning" class="resource-link ref" onclick="event.stopPropagation()">📋 Scanning Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Network Security</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 13 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 13</div>
         <div class="chapter-title">Packet Filtering</div>
-        <div class="chapter-sections">13.1 Netfilter Architecture · 13.2 iptables · 13.3 ip6tables · 13.4 IP Sets · 13.5 Connection Tracking · 13.6 NAT · 13.7 nftables</div>
+        <p class="chapter-summary">Weight-5 and one of the most command-heavy topics. Proficiency with iptables chains, tables, targets, NAT, connection tracking, IP sets, and nftables is essential.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 334.3 (Wt 5)</span><span class="tag tag-cyan">iptables</span><span class="tag tag-cyan">nftables</span>
+          <span class="tag tag-purple">Obj 334.3 (Wt 5)</span><span class="tag tag-cyan">iptables</span><span class="tag tag-cyan">nftables</span><span class="tag tag-cyan">NAT</span>
+        </div>
+        <span class="weight-badge critical">🔥 CRITICAL — Weight 5</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>13.1 Netfilter Architecture and Packet Flow</li>
+              <li>13.2 iptables — Comprehensive Coverage</li>
+              <li>13.3 ip6tables — IPv6 Packet Filtering</li>
+              <li>13.4 IP Sets</li>
+              <li>13.5 Connection Tracking</li>
+              <li>13.6 Network Address Translation</li>
+              <li>13.7 nftables — The Next-Generation Packet Filter</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>iptables -A</code><code>iptables -L</code><code>iptables -t nat</code><code>ip6tables</code><code>ipset</code><code>conntrack</code><code>nft add rule</code><code>nft list ruleset</code><code>iptables-save</code><code>iptables-restore</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../reference/index.html#firewall" class="resource-link ref" onclick="event.stopPropagation()">📋 Firewall &amp; Networking Reference Card</a>
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Firewalls</a>
+              <a href="../reference/index.html#ports" class="resource-link ref" onclick="event.stopPropagation()">📋 Key Ports Reference</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 14 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 14</div>
         <div class="chapter-title">Virtual Private Networks</div>
-        <div class="chapter-sections">14.1 Bridged vs. Routed VPNs · 14.2 OpenVPN · 14.3 IPsec with strongSwan · 14.4 WireGuard · 14.5 L2TP Awareness</div>
+        <p class="chapter-summary">VPN technologies: OpenVPN, strongSwan (IPsec), WireGuard, and L2TP awareness. Understand bridged vs. routed VPNs and configure site-to-site and client-server deployments.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 334.4 (Wt 5)</span><span class="tag tag-cyan">WireGuard</span><span class="tag tag-cyan">strongSwan</span><span class="tag tag-green">Lab 14.1</span>
+          <span class="tag tag-purple">Obj 334.4 (Wt 4)</span><span class="tag tag-cyan">WireGuard</span><span class="tag tag-cyan">strongSwan</span><span class="tag tag-cyan">OpenVPN</span>
+        </div>
+        <span class="weight-badge high">⚡ HIGH — Weight 4</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>14.1 VPN Concepts: Bridged vs. Routed</li>
+              <li>14.2 OpenVPN Configuration</li>
+              <li>14.3 IPsec with strongSwan</li>
+              <li>14.4 WireGuard</li>
+              <li>14.5 L2TP Awareness</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>openvpn</code><code>ipsec</code><code>swanctl</code><code>wg</code><code>wg-quick</code><code>wg genkey</code><code>wg pubkey</code><code>ipsec.conf</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-14-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 14.1 — WireGuard VPN Setup</a>
+              <a href="../reference/index.html#firewall" class="resource-link ref" onclick="event.stopPropagation()">📋 Firewall &amp; Networking Reference Card</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Part V -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- Part V — Threats & Vulnerability Assessment -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Part V — Exam Topic 335</div>
       <div class="part-title">Threats and Vulnerability Assessment</div>
       <div class="part-meta">Weight 5 · ~8% of Exam · 2 Chapters · Objectives 335.1–335.2</div>
     </div>
     <div class="grid-2" style="margin-bottom:2rem">
-      <div class="chapter-card">
+
+      <!-- Chapter 15 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 15</div>
         <div class="chapter-title">Common Security Vulnerabilities and Threats</div>
-        <div class="chapter-sections">15.1 Threats Against Nodes · 15.2 Threats Against Networks · 15.3 Threats Against Applications · 15.4 Threats Against Credentials · 15.5 Linux Defense Mechanisms · 15.6 Honeypots</div>
+        <p class="chapter-summary">Common attack types and vulnerability categories — what each threat is, how it works, and what defenses apply. Conceptual coverage at weight 2.</p>
         <div class="chapter-tags">
           <span class="tag tag-purple">Obj 335.1 (Wt 2)</span><span class="tag tag-cyan">DDoS</span><span class="tag tag-cyan">XSS</span><span class="tag tag-cyan">Buffer Overflow</span>
         </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 2</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>15.1 Threats Against Individual Nodes</li>
+              <li>15.2 Threats Against Networks</li>
+              <li>15.3 Threats Against Applications</li>
+              <li>15.4 Threats Against Credentials and Confidentiality</li>
+              <li>15.5 Linux-Specific Defense Mechanisms</li>
+              <li>15.6 Honeypots</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../flashcards/index.html" class="resource-link flash" onclick="event.stopPropagation()">🃏 Flashcards — Threats</a>
+              <a href="../glossary/index.html" class="resource-link gloss" onclick="event.stopPropagation()">🔍 Glossary Terms</a>
+              <a href="../quiz/index.html" class="resource-link quiz-link" onclick="event.stopPropagation()">✅ Practice Exam</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="chapter-card">
+
+      <!-- Chapter 16 -->
+      <div class="chapter-card" onclick="toggleChapter(this)">
+        <div class="chapter-toggle">▼</div>
         <div class="chapter-number">Chapter 16</div>
         <div class="chapter-title">Penetration Testing</div>
-        <div class="chapter-sections">16.1 Concepts &amp; Ethics · 16.2 Nmap Scanning · 16.3 Metasploit Framework · 16.4 Kali Linux, Armitage &amp; SET · 16.5 Compliance Considerations</div>
+        <p class="chapter-summary">Penetration testing concepts, ethical and legal considerations, Nmap for network scanning, and awareness of Metasploit, Kali Linux, Armitage, and SET.</p>
         <div class="chapter-tags">
-          <span class="tag tag-purple">Obj 335.2 (Wt 3)</span><span class="tag tag-cyan">Nmap</span><span class="tag tag-cyan">Metasploit</span><span class="tag tag-green">Lab 16.1</span>
+          <span class="tag tag-purple">Obj 335.2 (Wt 3)</span><span class="tag tag-cyan">Nmap</span><span class="tag tag-cyan">Metasploit</span><span class="tag tag-cyan">Kali</span>
+        </div>
+        <span class="weight-badge moderate">📘 MODERATE — Weight 3</span>
+        <div class="chapter-detail">
+          <div class="detail-section">
+            <div class="detail-label">📋 Sections</div>
+            <ul class="detail-sections-list">
+              <li>16.1 Penetration Testing Concepts and Ethics</li>
+              <li>16.2 Network Scanning with Nmap</li>
+              <li>16.3 The Metasploit Framework</li>
+              <li>16.4 Kali Linux, Armitage, and SET</li>
+              <li>16.5 Penetration Testing Compliance Considerations</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">⌨️ Key Commands &amp; Tools</div>
+            <div class="detail-commands">
+              <code>nmap -sS</code><code>nmap -sV</code><code>nmap -O</code><code>nmap --script</code><code>msfconsole</code><code>msfvenom</code><code>searchsploit</code>
+            </div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">🔗 Related Resources</div>
+            <div class="detail-resources">
+              <a href="../labs/index.html#lab-16-1" class="resource-link lab" onclick="event.stopPropagation()">🔬 Lab 16.1 — Nmap Scanning</a>
+              <a href="../reference/index.html#scanning" class="resource-link ref" onclick="event.stopPropagation()">📋 Scanning Reference Card</a>
+              <a href="../reference/index.html#ports" class="resource-link ref" onclick="event.stopPropagation()">📋 Key Ports Reference</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════ -->
     <!-- Appendices -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="part-header">
       <div class="part-label">Appendices</div>
       <div class="part-title">Additional Resources</div>
     </div>
     <div class="grid-3" style="margin-bottom:2rem">
-      <div class="chapter-card">
+      <div class="chapter-card" style="cursor:default">
         <div class="chapter-number">Appendix A</div>
         <div class="chapter-title">Chapter Review Answer Key</div>
         <div class="chapter-sections">Answers for all chapter review questions</div>
       </div>
-      <div class="chapter-card">
+      <div class="chapter-card" style="cursor:default">
         <div class="chapter-number">Appendix B</div>
         <div class="chapter-title">Exam Objective-to-Chapter Mapping</div>
         <div class="chapter-sections">Complete mapping of every exam objective to its chapter</div>
@@ -231,9 +907,9 @@
       <a href="../reference/index.html" class="chapter-card" style="text-decoration:none">
         <div class="chapter-number">Appendix C</div>
         <div class="chapter-title">Command Quick Reference</div>
-        <div class="chapter-sections">Every critical command on one page → Reference Cards</div>
+        <div class="chapter-sections">Every critical command on one page → <strong style="color:var(--accent)">View Reference Cards →</strong></div>
       </a>
-      <div class="chapter-card">
+      <div class="chapter-card" style="cursor:default">
         <div class="chapter-number">Appendix D</div>
         <div class="chapter-title">Lab Environment Setup Guide</div>
         <div class="chapter-sections">VM setup with Ubuntu Server 24.04 LTS &amp; Rocky Linux 9</div>
@@ -241,14 +917,14 @@
       <a href="../quiz/index.html" class="chapter-card" style="text-decoration:none">
         <div class="chapter-number">Appendix E</div>
         <div class="chapter-title">Practice Exam (65 Questions)</div>
-        <div class="chapter-sections">Full-length practice exam → Take Quiz Online</div>
+        <div class="chapter-sections">Full-length practice exam → <strong style="color:var(--accent)">Take Quiz Online →</strong></div>
       </a>
       <a href="../quiz/index.html" class="chapter-card" style="text-decoration:none">
         <div class="chapter-number">Appendix F</div>
         <div class="chapter-title">Practice Exam Answer Key</div>
-        <div class="chapter-sections">Detailed answers and explanations → Quiz with Feedback</div>
+        <div class="chapter-sections">Detailed answers and explanations → <strong style="color:var(--accent)">Quiz with Feedback →</strong></div>
       </a>
-      <div class="chapter-card">
+      <div class="chapter-card" style="cursor:default">
         <div class="chapter-number">Appendix G</div>
         <div class="chapter-title">Additional Study Resources</div>
         <div class="chapter-sections">30-day, 60-day, and 90-day study plans</div>
@@ -256,12 +932,12 @@
       <a href="../flashcards/index.html" class="chapter-card" style="text-decoration:none">
         <div class="chapter-number">Appendix H</div>
         <div class="chapter-title">Fill-in-the-Blank Command Drill</div>
-        <div class="chapter-sections">40 command drills → Practice with Flashcards</div>
+        <div class="chapter-sections">40 command drills → <strong style="color:var(--accent)">Practice with Flashcards →</strong></div>
       </a>
       <a href="../glossary/index.html" class="chapter-card" style="text-decoration:none">
         <div class="chapter-number">Glossary</div>
         <div class="chapter-title">Searchable Glossary</div>
-        <div class="chapter-sections">70+ key terms → Search Online</div>
+        <div class="chapter-sections">70+ key terms → <strong style="color:var(--accent)">Search Online →</strong></div>
       </a>
     </div>
 
@@ -276,5 +952,12 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script>
+function toggleChapter(card) {
+  // Don't toggle if user clicked a link inside the detail
+  if (event && event.target.closest('.resource-link')) return;
+  card.classList.toggle('expanded');
+}
+</script>
 </body>
 </html>
