@@ -431,21 +431,21 @@
       </div>
     </div>
 
-    <!-- Lab 12.1 — NEW: Snort IDS -->
+    <!-- Lab 12.1 — Suricata IDS -->
     <div class="lab-card">
-      <h3>⚡ Lab 12.1 — Snort IDS Configuration &amp; Rule Writing</h3>
+      <h3>⚡ Lab 12.1 — Suricata IDS Rule Writing &amp; Alert Analysis</h3>
       <div class="lab-meta">
         <span class="tag tag-cyan">Chapter 12</span>
         <span class="tag tag-purple">Obj 334.2</span>
         <span class="tag tag-orange">Exam Focus</span>
       </div>
-      <div class="lab-objective">Configure Snort network variables, write custom IDS rules (ICMP alert, SSH brute-force, SQL injection), test in NIDS mode, and manage rules with PulledPork.</div>
+      <div class="lab-objective">Install Suricata, configure HOME_NET and interface, write custom detection rules (ICMP, SSH, SYN scan, suspicious user-agent), run in IDS mode, and analyze alerts in eve.json with jq.</div>
       <button class="lab-toggle" onclick="toggleLab('lab-12-1')">▶ Launch Lab</button>
       <div class="lab-content" id="lab-12-1">
         <div class="terminal">
           <div class="terminal-header">
             <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
-            <span class="terminal-title">Lab 12.1 — Snort IDS</span>
+            <span class="terminal-title">Lab 12.1 — Suricata IDS</span>
           </div>
           <div class="terminal-body" id="term-12-1"></div>
         </div>
@@ -468,6 +468,27 @@
             <span class="terminal-title">Lab 12.2 — OpenVAS / GVM</span>
           </div>
           <div class="terminal-body" id="term-12-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab 13.1 — Stateful Firewall -->
+    <div class="lab-card">
+      <h3>⚡ Lab 13.1 — Building a Stateful Firewall with iptables &amp; nftables</h3>
+      <div class="lab-meta">
+        <span class="tag tag-cyan">Chapter 13</span>
+        <span class="tag tag-purple">Obj 334.3</span>
+        <span class="tag tag-orange">Exam Critical</span>
+      </div>
+      <div class="lab-objective">Build a production-grade stateful firewall: set default DROP policy, allow established/related connections, rate-limit ICMP and SSH brute-force protection with iptables, then convert to nftables equivalent.</div>
+      <button class="lab-toggle" onclick="toggleLab('lab-13-1')">▶ Launch Lab</button>
+      <div class="lab-content" id="lab-13-1">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+            <span class="terminal-title">Lab 13.1 — Stateful Firewall</span>
+          </div>
+          <div class="terminal-body" id="term-13-1"></div>
         </div>
       </div>
     </div>
@@ -673,15 +694,16 @@ document.addEventListener('DOMContentLoaded', () => {
     {cmd:"tcpdump -r capture.pcap -n host 192.168.1.100",accept:["tcpdump -r capture.pcap -n host 192.168.1.100","tcpdump -r capture.pcap"],hint:"tcpdump -r capture.pcap -n host 192.168.1.100",output:["reading from file capture.pcap","12:00:15 IP 192.168.1.100.22 > 192.168.1.1.54321: Flags [P.], seq 1:37","12:00:15 IP 192.168.1.1.54321 > 192.168.1.100.22: Flags [.], ack 37"]},
   ]);
 
-  // Lab 12.1: Snort IDS
+  // Lab 12.1: Suricata IDS
   initTerminal('term-12-1', [
-    {intro:"# Lab 12.1 — Snort IDS Configuration & Rule Writing",cmd:"snort -V",accept:["snort -V","snort --version"],hint:"snort -V — check installed version",output:["   ,,_     -*> Snort! <*-","  o\"  )~   Version 3.1.76.0","   ''''    By Martin Roesch & The Snort Team","           https://www.snort.org","<span class='success'>Snort ready.</span>"]},
-    {cmd:"cat /etc/snort/snort.conf | grep HOME_NET",accept:["cat /etc/snort/snort.conf | grep HOME_NET","grep HOME_NET /etc/snort/snort.conf"],hint:"grep HOME_NET /etc/snort/snort.conf",output:["var HOME_NET 10.0.0.0/8","var EXTERNAL_NET !$HOME_NET"]},
-    {cmd:"snort -T -c /etc/snort/snort.conf",accept:["snort -T -c /etc/snort/snort.conf","sudo snort -T -c /etc/snort/snort.conf"],hint:"snort -T -c /etc/snort/snort.conf — test configuration",output:["Running in Test mode","        --== Initializing Snort ==--","Initializing Output Plugins!","Verifying Preprocessor Configurations!","        --== Initialization Complete ==--","   ,,_     -*> Snort! <*-","  o\"  )~   Version 3.1.76.0","<span class='success'>Snort successfully validated the configuration!</span>"]},
-    {cmd:"echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules",accept:["echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules"],hint:"echo 'alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)' >> /etc/snort/rules/local.rules",output:["<span class='success'>Rule appended to local.rules</span>"]},
-    {cmd:"echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)' >> /etc/snort/rules/local.rules",accept:["echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)' >> /etc/snort/rules/local.rules"],hint:"Write an SSH brute-force rule with threshold — action proto src port -> dst port (options)",output:["<span class='success'>SSH brute-force rule added</span>"]},
-    {cmd:"snort -A console -q -c /etc/snort/snort.conf -i eth0",accept:["snort -A console -q -c /etc/snort/snort.conf -i eth0","sudo snort -A console -q -c /etc/snort/snort.conf -i eth0"],hint:"snort -A console -q -c /etc/snort/snort.conf -i eth0 — run in NIDS mode",output:["06/01-12:00:01.123456 [**] [1:1000001:1] ICMP Traffic Detected [**]","[Priority: 0] {ICMP} 203.0.113.50 -> 10.0.0.5","06/01-12:00:02.234567 [**] [1:1000001:1] ICMP Traffic Detected [**]","[Priority: 0] {ICMP} 203.0.113.50 -> 10.0.0.5","<span class='success'>^C — Snort NIDS mode active, alerts streaming.</span>"]},
-    {cmd:"cat /etc/snort/rules/local.rules",accept:["cat /etc/snort/rules/local.rules"],hint:"cat /etc/snort/rules/local.rules — verify all custom rules",output:["alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ICMP Traffic Detected\"; sid:1000001; rev:1;)","alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:\"SSH Brute Force\"; flags:S; threshold:type both, track by_src, count 5, seconds 60; sid:1000002; rev:1;)","<span class='success'>2 custom rules active in local.rules</span>"]},
+    {intro:"# Lab 12.1 — Suricata IDS Rule Writing & Alert Analysis",cmd:"sudo apt install suricata jq -y",accept:["sudo apt install suricata jq -y","apt install suricata jq -y","sudo apt install suricata jq","apt install suricata jq"],hint:"sudo apt install suricata jq -y",output:["Reading package lists... Done","Setting up suricata (7.0.4-1) ...","Setting up jq (1.7.1) ...","<span class='success'>Suricata and jq installed.</span>"]},
+    {cmd:"suricata --build-info | head -5",accept:["suricata --build-info | head -5","suricata --build-info"],hint:"suricata --build-info | head -5 — verify installation",output:["This is Suricata version 7.0.4 RELEASE","Features: NFQ PCAP AF_PACKET NETMAP LUA LUAJIT HIREDIS TLS","SIMD support: SSE_4_2 SSE_4_1 SSE_3","Atomic intrinsics: 1 2 4 8 16 byte(s)","<span class='success'>Suricata ready — multi-threaded IDS/IPS engine.</span>"]},
+    {cmd:"sudo suricata -T -c /etc/suricata/suricata.yaml",accept:["sudo suricata -T -c /etc/suricata/suricata.yaml","suricata -T -c /etc/suricata/suricata.yaml"],hint:"suricata -T -c /etc/suricata/suricata.yaml — test config",output:["01/06/2026 -- 12:00:00 - <Notice> - This is Suricata version 7.0.4","01/06/2026 -- 12:00:00 - <Notice> - all 4 packet processing threads","01/06/2026 -- 12:00:01 - <Notice> - Configuration provided was","<span class='success'>successfully loaded. Exiting.</span>"]},
+    {cmd:"sudo tee /etc/suricata/rules/local.rules << 'EOF'\nalert icmp any any -> $HOME_NET any (msg:\"LAB - ICMP Ping Detected\"; itype:8; sid:9000001; rev:1;)\nalert tcp any any -> $HOME_NET 22 (msg:\"LAB - SSH Connection Attempt\"; flags:S,12; sid:9000002; rev:1;)\nalert tcp any any -> $HOME_NET any (msg:\"LAB - Possible SYN Scan\"; flags:S,12; threshold:type threshold, track by_src, count 10, seconds 30; sid:9000003; rev:1;)\nEOF",accept:["sudo tee /etc/suricata/rules/local.rules << 'EOF'\nalert icmp any any -> $HOME_NET any (msg:\"LAB - ICMP Ping Detected\"; itype:8; sid:9000001; rev:1;)\nalert tcp any any -> $HOME_NET 22 (msg:\"LAB - SSH Connection Attempt\"; flags:S,12; sid:9000002; rev:1;)\nalert tcp any any -> $HOME_NET any (msg:\"LAB - Possible SYN Scan\"; flags:S,12; threshold:type threshold, track by_src, count 10, seconds 30; sid:9000003; rev:1;)\nEOF"],hint:"Write 3 rules to local.rules: ICMP ping (itype:8), SSH (flags:S,12), SYN scan (threshold)",output:["alert icmp any any -> $HOME_NET any (msg:\"LAB - ICMP Ping Detected\"; itype:8; sid:9000001; rev:1;)","alert tcp any any -> $HOME_NET 22 (msg:\"LAB - SSH Connection Attempt\"; flags:S,12; sid:9000002; rev:1;)","alert tcp any any -> $HOME_NET any (msg:\"LAB - Possible SYN Scan\"; flags:S,12; threshold:type threshold, track by_src, count 10, seconds 30; sid:9000003; rev:1;)","<span class='success'>3 custom Suricata rules written to local.rules</span>"]},
+    {cmd:"sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -D",accept:["sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -D","suricata -c /etc/suricata/suricata.yaml -i eth0 -D","sudo suricata -c /etc/suricata/suricata.yaml -i eth0"],hint:"sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -D — run as daemon",output:["01/06/2026 -- 12:01:00 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started","<span class='success'>Suricata running in IDS daemon mode on eth0.</span>"]},
+    {cmd:"ping -c 3 127.0.0.1",accept:["ping -c 3 127.0.0.1","ping -c 3 localhost"],hint:"ping -c 3 127.0.0.1 — trigger ICMP rule",output:["PING 127.0.0.1: 64 bytes, icmp_seq=1 ttl=64 time=0.028 ms","PING 127.0.0.1: 64 bytes, icmp_seq=2 ttl=64 time=0.031 ms","PING 127.0.0.1: 64 bytes, icmp_seq=3 ttl=64 time=0.029 ms","<span class='success'>--- 3 packets transmitted, 3 received ---</span>"]},
+    {cmd:"sudo cat /var/log/suricata/eve.json | jq 'select(.event_type==\"alert\") | {timestamp, src_ip, signature: .alert.signature, sid: .alert.signature_id}'",accept:["sudo cat /var/log/suricata/eve.json | jq 'select(.event_type==\"alert\") | {timestamp, src_ip, signature: .alert.signature, sid: .alert.signature_id}'","cat /var/log/suricata/eve.json | jq 'select(.event_type==\"alert\")'","sudo cat /var/log/suricata/eve.json | jq 'select(.event_type==\"alert\")'"],hint:"cat eve.json | jq 'select(.event_type==\"alert\")' — parse alerts with jq",output:["{","  \"timestamp\": \"2026-06-01T12:01:03.123456+0000\",","  \"src_ip\": \"127.0.0.1\",","  \"signature\": \"LAB - ICMP Ping Detected\",","  \"sid\": 9000001","}","{","  \"timestamp\": \"2026-06-01T12:01:03.234567+0000\",","  \"src_ip\": \"127.0.0.1\",","  \"signature\": \"LAB - ICMP Ping Detected\",","  \"sid\": 9000001","}","<span class='success'>Alerts parsed from eve.json — Suricata JSON logging working.</span>"]},
+    {cmd:"sudo cat /var/log/suricata/eve.json | jq -r 'select(.event_type==\"alert\") | .alert.signature' | sort | uniq -c | sort -rn",accept:["sudo cat /var/log/suricata/eve.json | jq -r 'select(.event_type==\"alert\") | .alert.signature' | sort | uniq -c | sort -rn"],hint:"Summarize alert counts by signature using jq + sort + uniq -c",output:["      3 LAB - ICMP Ping Detected","      1 LAB - SSH Connection Attempt","<span class='success'>Alert summary complete. Suricata lab done!</span>"]},
   ]);
 
   // Lab 12.2: OpenVAS/GVM
@@ -698,6 +720,21 @@ document.addEventListener('DOMContentLoaded', () => {
     {intro:"# Lab 7.2 — OpenSCAP Compliance Scanning",cmd:"sudo dnf install openscap-scanner scap-security-guide",accept:["sudo dnf install openscap-scanner scap-security-guide","dnf install openscap-scanner scap-security-guide","sudo apt install libopenscap8 ssg-debian"],hint:"sudo dnf install openscap-scanner scap-security-guide",output:["Dependencies resolved.","Installing:","  openscap-scanner  x86_64  1.3.9-1.el9","  scap-security-guide noarch  0.1.72-1.el9","<span class='success'>Complete! OpenSCAP scanner and SCAP Security Guide installed.</span>"]},
     {cmd:"oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",accept:["oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml"],hint:"oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml — list profiles",output:["Document type: Source Data Stream","Imported: 2024-06-15","Stream: scap_org.open-scap_datastream","Profiles:","  Title: CIS Red Hat Enterprise Linux 9 Benchmark Level 1 - Server","    Id: xccdf_org.ssgproject.content_profile_cis","  Title: DISA STIG for Red Hat Enterprise Linux 9","    Id: xccdf_org.ssgproject.content_profile_stig","  Title: PCI-DSS v4.0 Control Baseline","    Id: xccdf_org.ssgproject.content_profile_pci-dss","<span class='success'>3 security profiles available.</span>"]},
     {cmd:"sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",accept:["sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml","oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml"],hint:"sudo oscap xccdf eval --profile cis --report /tmp/compliance-report.html /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml",output:["Title   Ensure permissions on /etc/passwd are configured","Rule    xccdf_org.ssgproject.content_rule_file_permissions_etc_passwd","Result  <span class='success'>pass</span>","","Title   Ensure SSH root login is disabled","Rule    xccdf_org.ssgproject.content_rule_sshd_disable_root_login","Result  <span class='error'>fail</span>","","Title   Ensure system-wide crypto policy is set","Rule    xccdf_org.ssgproject.content_rule_configure_crypto_policy","Result  <span class='success'>pass</span>","","--- Results Summary ---","Pass:  87","Fail:  14","Not Applicable: 31","<span class='success'>HTML report saved: /tmp/compliance-report.html</span>"]},
+  ]);
+
+  // Lab 13.1: Stateful Firewall with iptables & nftables
+  initTerminal('term-13-1', [
+    {intro:"# Lab 13.1 — Building a Stateful Firewall (Exam Critical!)",cmd:"sudo iptables -F && sudo iptables -X && sudo iptables -t nat -F",accept:["sudo iptables -F && sudo iptables -X && sudo iptables -t nat -F","sudo iptables -F","iptables -F"],hint:"sudo iptables -F && sudo iptables -X && sudo iptables -t nat -F — flush all rules",output:["<span class='success'>All iptables rules flushed (filter + nat tables).</span>"]},
+    {cmd:"sudo iptables -P INPUT DROP && sudo iptables -P FORWARD DROP && sudo iptables -P OUTPUT ACCEPT",accept:["sudo iptables -P INPUT DROP && sudo iptables -P FORWARD DROP && sudo iptables -P OUTPUT ACCEPT","sudo iptables -P INPUT DROP"],hint:"sudo iptables -P INPUT DROP — set default DROP policy (whitelist approach)",output:["<span class='success'>Default policies: INPUT=DROP, FORWARD=DROP, OUTPUT=ACCEPT</span>"]},
+    {cmd:"sudo iptables -A INPUT -i lo -j ACCEPT",accept:["sudo iptables -A INPUT -i lo -j ACCEPT","iptables -A INPUT -i lo -j ACCEPT"],hint:"sudo iptables -A INPUT -i lo -j ACCEPT — allow loopback",output:["<span class='success'>Loopback traffic allowed.</span>"]},
+    {cmd:"sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT",accept:["sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT","iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT"],hint:"sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT",output:["<span class='success'>Stateful rule: established/related connections accepted.</span>"]},
+    {cmd:"sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP",accept:["sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP"],hint:"sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP",output:["<span class='success'>Invalid packets dropped.</span>"]},
+    {cmd:"sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT",accept:["sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT","sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT"],hint:"sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT",output:["<span class='success'>SSH (port 22) allowed for new connections.</span>"]},
+    {cmd:"sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW -j ACCEPT",accept:["sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW -j ACCEPT","sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT"],hint:"sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 ... -j ACCEPT",output:["<span class='success'>HTTP (80) and HTTPS (443) allowed.</span>"]},
+    {cmd:"sudo iptables -L -n -v --line-numbers",accept:["sudo iptables -L -n -v --line-numbers","sudo iptables -L -n -v","iptables -L -n -v --line-numbers","iptables -L -n -v"],hint:"sudo iptables -L -n -v --line-numbers — verify the ruleset",output:["Chain INPUT (policy DROP 0 packets, 0 bytes)","num   pkts bytes target     prot  in   source       destination","1        0     0 ACCEPT     all   lo   0.0.0.0/0    0.0.0.0/0","2        0     0 ACCEPT     all   --   0.0.0.0/0    0.0.0.0/0    ctstate ESTABLISHED,RELATED","3        0     0 DROP       all   --   0.0.0.0/0    0.0.0.0/0    ctstate INVALID","4        0     0 ACCEPT     tcp   --   0.0.0.0/0    0.0.0.0/0    tcp dpt:22 ctstate NEW","5        0     0 ACCEPT     tcp   --   0.0.0.0/0    0.0.0.0/0    multiport dports 80,443 ctstate NEW","","Chain FORWARD (policy DROP)","Chain OUTPUT (policy ACCEPT)","<span class='success'>Stateful firewall active — 5 rules in INPUT chain.</span>"]},
+    {cmd:"sudo iptables-save > /etc/iptables/rules.v4",accept:["sudo iptables-save > /etc/iptables/rules.v4","iptables-save > /etc/iptables/rules.v4","sudo iptables-save"],hint:"sudo iptables-save > /etc/iptables/rules.v4 — persist rules",output:["<span class='success'>Rules saved — will survive reboot.</span>"]},
+    {cmd:"iptables-translate -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT",accept:["iptables-translate -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT"],hint:"iptables-translate — convert an iptables rule to nftables syntax",output:["nft add rule ip filter INPUT tcp dport 22 ct state new counter accept","<span class='success'>iptables → nftables translation complete.</span>"]},
+    {cmd:"sudo nft list ruleset",accept:["sudo nft list ruleset","nft list ruleset"],hint:"sudo nft list ruleset — view the full nftables ruleset",output:["table inet filter {","    chain input {","        type filter hook input priority 0; policy drop;","        ct state established,related accept","        ct state invalid drop","        iifname \"lo\" accept","        tcp dport 22 ct state new accept","        tcp dport { 80, 443 } ct state new accept","    }","    chain forward {","        type filter hook forward priority 0; policy drop;","    }","    chain output {","        type filter hook output priority 0; policy accept;","    }","}","<span class='success'>nftables ruleset verified.</span>"]},
   ]);
 
   // Lab 14.1: WireGuard VPN

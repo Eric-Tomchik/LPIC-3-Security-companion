@@ -145,6 +145,11 @@ const flashcardData = [
   {term:"nftables vs. iptables",def:"nftables replaces iptables with unified syntax, atomic rule replacement, and sets. Command: nft. Config: /etc/nftables.conf.",cat:"firewall"},
   {term:"IP Sets",def:"Kernel data structures for efficient matching of IP addresses, networks, or ports. Created with ipset, referenced in iptables with -m set.",cat:"firewall"},
   {term:"DNAT / SNAT",def:"DNAT rewrites destination (port forwarding, PREROUTING chain). SNAT rewrites source (POSTROUTING chain). MASQUERADE = dynamic SNAT.",cat:"firewall"},
+  {term:"Snort vs. Suricata",def:"Snort: single-threaded NIDS (Snort 3 adds multi-thread). Suricata: multi-threaded IDS/IPS, native JSON logging (eve.json), protocol-layer keywords, Snort-compatible rules.",cat:"firewall"},
+  {term:"Suricata Rule Syntax",def:"action proto src port -> dst port (options). Example: alert http any any -> $HOME_NET 80 (msg:\\\"HTTP GET\\\"; content:\\\"GET\\\"; sid:1001; rev:1;)",cat:"firewall"},
+  {term:"eve.json",def:"Suricata's JSON event log at /var/log/suricata/eve.json. Contains alerts, flow records, DNS, TLS, HTTP metadata. Parse with jq.",cat:"firewall"},
+  {term:"suricata -T",def:"Test Suricata configuration without starting engine. Validates suricata.yaml and all loaded rules.",cat:"firewall"},
+  {term:"Suricata vs. OpenVAS",def:"Suricata = IDS/IPS (detects attacks in progress using signatures/rules). OpenVAS/GVM = vulnerability scanner (probes for known weaknesses). Complementary tools.",cat:"firewall"},
   // VPNs
   {term:"OpenVPN",def:"SSL/TLS-based VPN using tun (routed, Layer 3) or tap (bridged, Layer 2) interfaces. Default port: 1194/UDP.",cat:"vpn"},
   {term:"IPsec / strongSwan",def:"Kernel-level VPN using IKEv2 for key exchange and ESP for encryption. Config: /etc/ipsec.conf + /etc/ipsec.secrets. Ports: 500, 4500.",cat:"vpn"},
@@ -186,6 +191,9 @@ const flashcardData = [
   {term:"nft _____ ruleset",def:"list — List the full nftables ruleset",cat:"commands"},
   {term:"_____ up wg0",def:"wg-quick — Bring up a WireGuard tunnel",cat:"commands"},
   {term:"wg _____",def:"show — Check WireGuard tunnel status",cat:"commands"},
+  {term:"suricata -c /etc/suricata/suricata.yaml _____ eth0",def:"-i — Run Suricata IDS on a specific interface",cat:"commands"},
+  {term:"jq 'select(.event_type==\"_____\")' eve.json",def:"alert — Filter Suricata eve.json for alert events",cat:"commands"},
+  {term:"suricata _____",def:"-T — Test Suricata configuration (validate rules/config)",cat:"commands"},
 ];
 
 document.addEventListener('DOMContentLoaded', () => initFlashcards(flashcardData));

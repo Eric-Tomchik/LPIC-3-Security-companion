@@ -178,6 +178,9 @@
         <tr><td>tcpdump capture</td><td><code>tcpdump -i eth0 -w capture.pcap</code></td></tr>
         <tr><td>Snort NIDS mode</td><td><code>snort -A console -c /etc/snort/snort.conf -i eth0</code></td></tr>
         <tr><td>Update Snort rules</td><td><code>pulledpork.pl -c /etc/snort/pulledpork.conf</code></td></tr>
+        <tr><td>Suricata IDS mode</td><td><code>suricata -c /etc/suricata/suricata.yaml -i eth0</code></td></tr>
+        <tr><td>Suricata config test</td><td><code>suricata -T -c /etc/suricata/suricata.yaml</code></td></tr>
+        <tr><td>Suricata alert analysis</td><td><code>jq 'select(.event_type=="alert")' /var/log/suricata/eve.json</code></td></tr>
       </table>
     </div>
 
@@ -214,6 +217,8 @@
         <tr><td><code>/etc/wireguard/wg0.conf</code></td><td>WireGuard interface configuration</td></tr>
         <tr><td><code>/etc/audit/rules.d/audit.rules</code></td><td>Persistent audit rules (RHEL)</td></tr>
         <tr><td><code>/etc/snort/snort.conf</code></td><td>Snort IDS configuration</td></tr>
+        <tr><td><code>/etc/suricata/suricata.yaml</code></td><td>Suricata IDS configuration</td></tr>
+        <tr><td><code>/var/log/suricata/eve.json</code></td><td>Suricata JSON alert/event log</td></tr>
         <tr><td><code>/etc/aide.conf</code></td><td>AIDE integrity monitoring configuration</td></tr>
       </table>
     </div>
